@@ -1,0 +1,47 @@
+<md-content>
+  <md-progress-linear ng-show="mainCtrl.loading" md-mode="indeterminate"></md-progress-linear>
+  <md-toolbar ng-show="mainCtrl.usersData" layout="row" layout-align="space-around center">
+    <h4>#</h4>
+    <h4>Username</h4>
+    <h4>Password</h4>
+    <h4>Phone Number</h4>
+    <h4>Options</h4>
+  </md-toolbar>
+  <md-list>
+    <md-list-item class="md-3-line" ng-repeat="data in mainCtrl.usersData">
+      <div class="md-list-item-text" flex layout="row">
+        <h3 flex="20">#{{$index+1}}</h3>
+        <h3 flex="20">
+          <span ng-show="!showInput">{{data.username}}</span>
+          <md-input-container>
+            <input ng-show="showInput" ng-init="user=data.username" ng-model="user" type="text" name="name">
+          </md-input-container>
+        </h3>
+        <h3 flex="20">
+          <span ng-show="!showInput">{{data.password}}</span>
+          <md-input-container>
+            <input ng-show="showInput" ng-init="pass=data.password" ng-model="pass" type="text" name="name">
+          </md-input-container>
+        </h3>
+        <h3 flex="20">
+          <span ng-show="!showInput">{{data.phoneNumber || 'not defined'}}</span>
+          <md-input-container>
+            <input ng-show="showInput" ng-init="phone=data.phoneNumber" ng-model="phone" type="text" name="name">
+          </md-input-container>
+        </h3>
+        <h3 flex="20">
+          <md-button ng-show="showSave" ng-click="mainCtrl.editUser(data._id, user, pass, phone); showSave=false; showInput=false; tableClass='info';" type="button" class="md-raised">
+            Save updated data
+          </md-button>
+          <md-button ng-show="!showSave" ng-click="showSave=true; showInput=true;" type="button" class="md-raised">
+            Edit
+          </md-button>
+          <md-button ng-click="mainCtrl.removeUser(data._id, $index); tableClass='danger';" type="button" class="md-raised">
+            Delete
+          </md-button>
+        </h3>
+      </div>
+      <md-divider></md-divider>
+    </md-list-item>
+  </md-list>
+</md-content>

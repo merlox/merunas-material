@@ -1,0 +1,50 @@
+<md-content ng-init="thumbnailCtrl.getThumbnails(); thumbnailCtrl.loading=true;" flex layout="row"  layout-align="center start">
+    <p ng-show="thumbnailCtrl.responseError">
+      Error: {{thumbnailCtrl.responseError}}
+    </p>
+    <md-content flex="75" layout="row" layout-wrap layout-align="space-around start">
+      <div flex="100" ng-if="thumbnailCtrl.loading" layout="row" layout-align="center center">
+        <md-progress-circular ng-show="thumbnailCtrl.loading" md-mode="indeterminate"></md-progress-circular>
+        <h3 ng-show="thumbnailCtrl.loading">Loading...</h3>
+      </div>
+
+      <md-card flex="30" ng-repeat="data in thumbnailCtrl.thumbnailData">
+        <img ng-show="data.imageName" ng-src="{{'uploads/'+data.imageName}}" alt="" />
+        <img ng-hide="data.imageName" ng-src="{{'uploads/notfound.png'}}" alt="" />
+
+        <md-card-content>
+          <h2>{{data.title}}</h2>
+          <p>{{data.body}}</p>
+          <md-progress-linear ng-if="deletingThis"></md-progress-linear>
+          <a ng-click="thumbnailCtrl.removeThumbnail(data.title); thumbnailCtrl.loading=true; deletingThis=true;" href="">Delete</a>
+        </md-card-content>
+        <md-divider></md-divider>
+
+        <md-card-footer layout="row" layout-align="center">
+          <md-button class="md-flat md-accent">Leer artículo</md-button>
+        </md-card-footer>
+      </md-card>
+    </md-content>
+
+    <md-content flex="25">
+      <md-card layout="column" layout-align="start center">
+        <md-toolbar layout-align="center center">
+          Last Posts
+        </md-toolbar>
+        <md-list >
+          <md-list-item>
+            dudes
+            <md-divider></md-divider>
+          </md-list-item>
+          <md-list-item>
+            dudes
+            <md-divider></md-divider>
+          </md-list-item>
+          <md-list-item>
+            dudes
+          </md-list-item>
+        </md-list>
+      </md-card>
+    </md-content>
+
+</md-content>

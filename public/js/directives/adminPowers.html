@@ -1,0 +1,16 @@
+<md-tabs  class="md-primary">
+    <md-tab ng-click="mainCtrl.getUsers(); mainCtrl.loading=true;" ng-disabled="!one" href="">
+      <span ng-if="!mainCtrl.loading">
+        Load Users
+      </span>
+      <span ng-if="mainCtrl.loading">
+        Loading...
+      </span>
+    </md-tab>
+    <md-tab ng-click="one=false" ui-sref="form">
+      Add user
+    </md-tab>
+    <md-tab ng-click="one=true; mainCtrl.getUsers(); mainCtrl.loading=true;" ui-sref="show">
+      Show all users
+    </md-tab>
+<md-tabs>

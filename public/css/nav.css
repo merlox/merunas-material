@@ -1,0 +1,72 @@
+.logo{
+	width: 310px;
+	padding-bottom: 10px;
+}
+.myNav{
+	margin-top:1.5em;
+	list-style-type: none;
+	padding: 0;
+	font-family: 'Nunito', sans-serif;
+}
+.myNav a{
+	display:block;
+	color:#797e83;
+	font-size:1.125em;
+	font-weight: 300;
+	text-align:center;
+	padding: .4em;
+	border-bottom:1px solid #ebecec;
+}
+.myNav a:hover{
+	color:#0b0b0b;
+	border-bottom-color:#ccccff;
+}
+.main-header, .myNav{
+	display:flex;
+	flex-direction:column;
+}
+.site-logo{
+	align-self:center;
+}
+
+/*-------------------------------------MEDIA QUERIES-------------------------------------*/
+
+@media (min-width:769px){
+	.main-header{
+		height:200px;
+		justify-content:flex-end;
+	}
+	.site-logo{
+		width:140px;
+	}
+	.myNav{
+		margin-top:3em;
+		flex-direction:row;
+		justify-content:space-between;
+	}
+	.myNav a{
+		border-bottom-color:transparent;
+	}
+}
+
+@media (min-width: 1025px){
+	.main-header{
+		flex-direction:row;
+	}
+	.site-logo{
+		margin-right:auto;
+	}
+	.myNav{
+		margin-top:0;
+		align-self:center;
+		margin-right: 50px;
+	}
+	.myNav li{
+		margin-left: .65em;
+		margin-right: .65em;
+
+	}
+	.myNav a{
+	border-bottom:1px solid #ebecec;
+	}
+}

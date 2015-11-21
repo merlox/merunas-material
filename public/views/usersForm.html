@@ -1,0 +1,51 @@
+<form ng-submit="mainCtrl.saveUser(); mainCtrl.loading = true;">
+  <md-input-container>
+    <label>Your username</label>
+    <input ng-model="mainCtrl.username" required type="text">
+  </md-input-container>
+  <md-input-container>
+    <label>Your password</label>
+    <input ng-model="mainCtrl.password" required type="text">
+  </md-input-container>
+  <md-input-container>
+    <label>Your phone number</label>
+    <input ng-model="mainCtrl.phoneNumber" type="number">
+  </md-input-container>
+  <md-button type="submit" class="md-primary md-raised">
+    <span ng-show="!mainCtrl.loading">
+      Save Data
+    </span>
+    <span ng-show="mainCtrl.loading">
+      Loading...
+    </span>
+  </md-button>
+</form>
+<md-toast ng-show="mainCtrl.response">
+  {{mainCtrl.response}}
+</md-toast>
+<table ng-show="mainCtrl.credentials" class="table table-bordered">
+  <tr>
+    <td>
+      Username:
+    </td>
+    <td>
+      {{mainCtrl.credentials.username}}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Password:
+    </td>
+    <td>
+      {{mainCtrl.credentials.password}}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Phone number:
+    </td>
+    <td>
+      {{mainCtrl.credentials.phoneNumber || 'not defined'}}
+    </td>
+  </tr>
+</table>

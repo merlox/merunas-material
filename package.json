@@ -1,0 +1,14 @@
+{
+  "name": "express-learning-exercice",
+  "version": "1.0.0",
+  "description": "Learning express database integration and initial setup",
+  "main": "server.js",
+  "author": "Merunas grincalaitis",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "latest",
+    "express": "latest",
+    "mongoose": "latest",
+    "multer": "^1.1.0"
+  }
+}

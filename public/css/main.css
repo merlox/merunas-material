@@ -1,0 +1,16 @@
+html{
+  font-family: roboto;
+}
+md-card-content *{
+  width:100%;
+  word-wrap:break-word;
+}
+md-card-footer *{
+  width:100%;
+  word-wrap:break-word;
+}
+.dropzone-div{
+  background-color: rgba(0, 0, 0, 0.19);
+  background-image: url('uploads/dropFilesHere.png'); 
+  height: 300px;
+}

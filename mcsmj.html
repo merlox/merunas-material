@@ -1,0 +1,58 @@
+<p ng-show="mainCtrl.errorUsers">
+  Error: {{mainCtrl.errorUsers}}
+</p>
+<p ng-show="mainCtrl.editMessage">
+  {{mainCtrl.editMessage}}
+</p>
+<div spinner ng-show="mainCtrl.loading" class="center-align"></div>
+<table ng-show="mainCtrl.usersData" class="centered striped responsive-table">
+  <thead>
+    <tr>
+      <th>
+        #
+      </th>
+      <th>
+        Username
+      </th>
+      <th>
+        Password
+      </th>
+      <th>
+        Phone number
+      </th>
+      <th>
+        Options
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="data in mainCtrl.usersData" ng-class="tableClass">
+      <th>
+        {{$index+1}}
+      </th>
+      <td>
+        <span ng-show="!showInput">{{data.username}}</span>
+        <input ng-show="showInput" ng-init="user=data.username" ng-model="user" type="text" name="name">
+      </td>
+      <td>
+        <span ng-show="!showInput">{{data.password}}</span>
+        <input ng-show="showInput" ng-init="pass=data.password" ng-model="pass" type="text" name="name">
+      </td>
+      <td>
+        <span ng-show="!showInput">{{data.phoneNumber || 'not defined'}}</span>
+        <input ng-show="showInput" ng-init="phone=data.phoneNumber" ng-model="phone" type="number" name="name">
+      </td>
+      <td>
+        <button ng-show="showSave" ng-click="mainCtrl.editUser(data._id, user, pass, phone); showSave=false; showInput=false; tableClass='info';" type="button" class="btn btn-default">
+          Save updated data
+        </button>
+        <button ng-show="!showSave" ng-click="showSave=true; showInput=true;" type="button" class="btn btn-default">
+          Edit
+        </button>
+        <button ng-click="mainCtrl.removeUser(data._id, $index); tableClass='danger';" type="button" class="btn btn-default">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
