@@ -10,7 +10,6 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
     });
   };
   thumbnailCtrl.postThumbnail = function(myFile){
-    console.log(myFile);
     if(myFile){
       Upload.upload({
         url: '/api/thumbnails/id',
