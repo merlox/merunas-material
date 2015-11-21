@@ -44,4 +44,23 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
       thumbnailCtrl.responseError = 'Something went wrong';
     });
   };
+  thumbnailCtrl.editThumbnail = function(myTitle, editTitle, editBody){
+    $http.put('/api/thumbnails/'+myTitle, {
+      title: editTitle,
+      body: editBody
+    }).then(function successCallback(response){
+      $http.get('/api/thumbnails/id').then(function successCallback(response){
+        console.log(response);
+        thumbnailCtrl.loading = false;
+        thumbnailCtrl.thumbnailData = response.data;
+      }, function errorCallback(response){
+        console.log(response);
+        thumbnailCtrl.loading = false;
+        thumbnailCtrl.responseError = response;
+      });
+    }, function errorCallback(response){
+      console.log(response);
+      thumbnailCtrl.responseError = 'Something went wrong';
+    });
+  };
 });

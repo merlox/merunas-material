@@ -15,8 +15,6 @@ app.controller('MainCtrl', function($http){
         mainCtrl.loading = false;
         mainCtrl.response = response;
       });
-  };
-  mainCtrl.getUsers = function(){
     $http.get('/api/users').then(function successCallback(response){
       mainCtrl.loading = false;
       mainCtrl.usersData = response.data;

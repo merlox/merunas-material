@@ -1,5 +1,5 @@
 <md-content ng-init="thumbnailCtrl.getThumbnails(); thumbnailCtrl.loading=true;" flex layout="row"  layout-align="center start">
-    <p ng-show="thumbnailCtrl.responseError">
+    <p flex="100" ng-show="thumbnailCtrl.responseError">
       Error: {{thumbnailCtrl.responseError}}
     </p>
     <md-content flex="75" layout="row" layout-wrap layout-align="space-around start">
@@ -13,10 +13,26 @@
         <img ng-hide="data.imageName" ng-src="{{'uploads/notfound.png'}}" alt="" />
 
         <md-card-content>
-          <h2>{{data.title}}</h2>
-          <p>{{data.body}}</p>
+          <h2 ng-show="!editing">{{data.title}}</h2>
+          <h2 ng-show="editing">
+            <md-input-container>
+              <label>title</label>
+              <input ng-model="editTitle" type="text">
+            </md-input-container>
+          </h2>
+          <p ng-show="!editing">{{data.body}}</p>
+          <p ng-show="editing">
+            <md-input-container>
+              <label>body</label>
+              <input ng-model="editBody" type="text">
+            </md-input-container>
+          </p>
           <md-progress-linear ng-if="deletingThis"></md-progress-linear>
           <a ng-click="thumbnailCtrl.removeThumbnail(data.title); thumbnailCtrl.loading=true; deletingThis=true;" href="">Delete</a>
+          <a ng-click="editing=true;" href="">Edit</a>
+          <md-button ng-click="thumbnailCtrl.editThumbnail(data.title, editTitle, editBody); editing=false;" ng-show="editing" class="md-raised md-primary">
+            Save
+          </md-button>
         </md-card-content>
         <md-divider></md-divider>
 

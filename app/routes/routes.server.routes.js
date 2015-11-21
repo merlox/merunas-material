@@ -82,6 +82,20 @@ module.exports = function(app, express){
           message: 'Removed successfully'
         });
       });
+    })
+    .put(function(req, res){
+      Thumbnail.findOne({title: req.params.title}, function(err, thumbnailFound){
+        if(err) return res.send('Error'+err);
+        thumbnailFound.title = req.body.title;
+        thumbnailFound.body = req.body.body;
+        thumbnailFound.save(function(err){
+          if(err) return res.send('Error'+err);
+          console.log('updated: '+thumbnailFound.title);
+          res.json({
+            message:'updated'
+          });
+        });
+      });
     });
 
   app.get('/public/js/directives/*', function(req, res){
