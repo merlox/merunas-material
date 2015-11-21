@@ -4,7 +4,13 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
     $http.get('/api/thumbnails').success(function(response){
       thumbnailCtrl.loading = false;
       thumbnailCtrl.thumbnailData = response.thumbnailsFound;
-      console.log(response);
+      thumbnailCtrl.actualPage = response.actualPage;
+      var totalPages = Math.floor(response.totalPages/18);
+      var range = [];
+      for (var i = 1; i <= totalPages; i++) {
+        range.push(i);
+      }
+      thumbnailCtrl.pagesArray = range;
     }).catch(function(response){
       thumbnailCtrl.loading = false;
       thumbnailCtrl.responseError = response;
@@ -68,6 +74,15 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
     $http.get('/api/thumbnails?limit='+limitQuery).success(function(response){
       thumbnailCtrl.loading = false;
       thumbnailCtrl.thumbnailData = response;
+    }).catch(function(response){
+      alert('Something went wrong');
+    });
+  };
+  thumbnailCtrl.getPage = function(pageQuery){
+    $http.get('/api/thumbnails?page='+pageQuery).success(function(response){
+      thumbnailCtrl.loading = false;
+      thumbnailCtrl.thumbnailData = response.thumbnailsFound;
+      thumbnailCtrl.actualPage = response.actualPage;
     }).catch(function(response){
       alert('Something went wrong');
     });

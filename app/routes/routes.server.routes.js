@@ -55,13 +55,24 @@ module.exports = function(app, express){
         });
       }else{
         var actualPage;
-        if(actualPage==undefined || actualPage==null) actualPage=0;
-        Thumbnail.find({}).sort('-createdAt').limit(18).exec(function(err, thumbnailsFound){
-          actualPage++;
-          if(err) return res.send(err);
-          res.json({
-            thumbnailsFound,
-            page: actualPage});
+        var skipResults;
+        var totalPages;
+        if(actualPage==undefined || actualPage==null) actualPage=1;
+        if(skipResults==undefined || skipResults==null) skipResults=0;
+        if(req.query.page){
+          actualPage = req.query.page;
+          skipResults = (actualPage-1)*18;
+        }
+        Thumbnail.find({}).sort('-createdAt').limit(18).skip(skipResults).exec(function(err, thumbnailsFound){
+          Thumbnail.count({}, function(err, count){
+            totalPages = count;
+            if(err) return res.send(err);
+            res.json({
+              thumbnailsFound,
+              actualPage: actualPage,
+              totalPages: totalPages
+            });
+          });
         });
       }
     })
