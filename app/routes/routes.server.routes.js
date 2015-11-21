@@ -46,12 +46,19 @@ module.exports = function(app, express){
       });
     });
 
-  app.route('/api/thumbnails/:title')
+  app.route('/api/thumbnails/:title?')
     .get(function(req, res){
-      Thumbnail.find({}).sort('-createdAt').exec(function(err, thumbnailsFound){
-        if(err) return res.send(err);
-        res.json(thumbnailsFound);
-      });
+      if(req.query.limit){
+        Thumbnail.find({}).sort('-createdAt').limit(req.query.limit).exec(function(err, thumbnailsFound){
+          if(err) return res.send(err);
+          res.json(thumbnailsFound);
+        });
+      }else{
+        Thumbnail.find({}).sort('-createdAt').exec(function(err, thumbnailsFound){
+          if(err) return res.send(err);
+          res.json(thumbnailsFound);
+        });
+      }
     })
     .post(function(req, res){
       var thumbnail = new Thumbnail();

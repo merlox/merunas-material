@@ -1,10 +1,10 @@
 app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
   thumbnailCtrl = this;
   thumbnailCtrl.getThumbnails = function(){
-    $http.get('/api/thumbnails/id').then(function successCallback(response){
+    $http.get('/api/thumbnails').success(function(response){
       thumbnailCtrl.loading = false;
-      thumbnailCtrl.thumbnailData = response.data;
-    }, function errorCallback(response){
+      thumbnailCtrl.thumbnailData = response;
+    }).catch(function(response){
       thumbnailCtrl.loading = false;
       thumbnailCtrl.responseError = response;
     });
@@ -12,7 +12,7 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
   thumbnailCtrl.postThumbnail = function(myFile){
     if(myFile){
       Upload.upload({
-        url: '/api/thumbnails/id',
+        url: '/api/thumbnails',
         method: 'POST',
         data: {file: Upload.dataUrltoBlob(myFile), title: thumbnailCtrl.title, body: thumbnailCtrl.body}
       }).then(function(response){
@@ -33,7 +33,7 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
   };
   thumbnailCtrl.removeThumbnail = function(myTitle){
     $http.delete('/api/thumbnails/'+myTitle).then(function successCallback(response){
-      $http.get('/api/thumbnails/id').then(function successCallback(response){
+      $http.get('/api/thumbnails').then(function successCallback(response){
         thumbnailCtrl.loading = false;
         thumbnailCtrl.thumbnailData = response.data;
       }, function errorCallback(response){
@@ -49,7 +49,7 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
       title: editTitle,
       body: editBody
     }).then(function successCallback(response){
-      $http.get('/api/thumbnails/id').then(function successCallback(response){
+      $http.get('/api/thumbnails').then(function successCallback(response){
         console.log(response);
         thumbnailCtrl.loading = false;
         thumbnailCtrl.thumbnailData = response.data;
@@ -61,6 +61,14 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
     }, function errorCallback(response){
       console.log(response);
       thumbnailCtrl.responseError = 'Something went wrong';
+    });
+  };
+  thumbnailCtrl.getThumbnailsLimit = function(limitQuery){
+    $http.get('/api/thumbnails?limit='+limitQuery).success(function(response){
+      thumbnailCtrl.loading = false;
+      thumbnailCtrl.thumbnailData = response;
+    }).catch(function(response){
+      alert('Something went wrong');
     });
   };
 });
