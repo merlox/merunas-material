@@ -24,15 +24,18 @@
           <p ng-show="editing">
             <md-input-container>
               <label>body</label>
-              <input ng-model="editBody" type="text">
+              <textarea ng-model="editBody"></textarea>
             </md-input-container>
           </p>
           <md-progress-linear ng-if="deletingThis"></md-progress-linear>
-          <a ng-click="thumbnailCtrl.removeThumbnail(data.title); thumbnailCtrl.loading=true; deletingThis=true;" href="">Delete</a>
-          <a ng-click="editing=true;" href="">Edit</a>
-          <md-button ng-click="thumbnailCtrl.editThumbnail(data.title, editTitle, editBody); editing=false;" ng-show="editing" class="md-raised md-primary">
-            Save
-          </md-button>
+          <div layout="row" flex>
+            <md-button ng-click="thumbnailCtrl.removeThumbnail(data.title); thumbnailCtrl.loading=true; deletingThis=true;" class="md-raised md-warn">
+              Delete</md-button>
+            <md-button ng-hide="editing" ng-click="editing=true;" class="md-raised md-primary">
+              Edit</md-button>
+            <md-button ng-click="thumbnailCtrl.editThumbnail(data.title, editTitle, editBody); editing=false;" ng-show="editing" class="md-raised md-primary">
+              Save</md-button>
+          </div>
         </md-card-content>
         <md-divider></md-divider>
 
