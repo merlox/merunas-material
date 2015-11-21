@@ -54,9 +54,14 @@ module.exports = function(app, express){
           res.json(thumbnailsFound);
         });
       }else{
-        Thumbnail.find({}).sort('-createdAt').exec(function(err, thumbnailsFound){
+        var actualPage;
+        if(actualPage==undefined || actualPage==null) actualPage=0;
+        Thumbnail.find({}).sort('-createdAt').limit(18).exec(function(err, thumbnailsFound){
+          actualPage++;
           if(err) return res.send(err);
-          res.json(thumbnailsFound);
+          res.json({
+            thumbnailsFound,
+            page: actualPage});
         });
       }
     })

@@ -3,7 +3,8 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
   thumbnailCtrl.getThumbnails = function(){
     $http.get('/api/thumbnails').success(function(response){
       thumbnailCtrl.loading = false;
-      thumbnailCtrl.thumbnailData = response;
+      thumbnailCtrl.thumbnailData = response.thumbnailsFound;
+      console.log(response);
     }).catch(function(response){
       thumbnailCtrl.loading = false;
       thumbnailCtrl.responseError = response;
@@ -32,15 +33,15 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
     }
   };
   thumbnailCtrl.removeThumbnail = function(myTitle){
-    $http.delete('/api/thumbnails/'+myTitle).then(function successCallback(response){
-      $http.get('/api/thumbnails').then(function successCallback(response){
+    $http.delete('/api/thumbnails/'+myTitle).success(function(response){
+      $http.get('/api/thumbnails').success(function(response){
         thumbnailCtrl.loading = false;
-        thumbnailCtrl.thumbnailData = response.data;
-      }, function errorCallback(response){
+        thumbnailCtrl.thumbnailData = response.thumbnailsFound;
+      }).catch(function(response){
         thumbnailCtrl.loading = false;
         thumbnailCtrl.responseError = response;
       });
-    }, function errorCallback(){
+    }).catch(function(response){
       thumbnailCtrl.responseError = 'Something went wrong';
     });
   };
@@ -48,17 +49,17 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
     $http.put('/api/thumbnails/'+myTitle, {
       title: editTitle,
       body: editBody
-    }).then(function successCallback(response){
-      $http.get('/api/thumbnails').then(function successCallback(response){
+    }).success(function(response){
+      $http.get('/api/thumbnails').success(function(response){
         console.log(response);
         thumbnailCtrl.loading = false;
         thumbnailCtrl.thumbnailData = response.data;
-      }, function errorCallback(response){
+      }).catch(function(response){
         console.log(response);
         thumbnailCtrl.loading = false;
         thumbnailCtrl.responseError = response;
       });
-    }, function errorCallback(response){
+    }).catch(function(response){
       console.log(response);
       thumbnailCtrl.responseError = 'Something went wrong';
     });
