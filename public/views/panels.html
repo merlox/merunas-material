@@ -44,7 +44,7 @@
         </md-card-footer>
       </md-card>
 
-      <div flex="100" layout="row" layout-align="center">
+      <div ng-hide="queryLimit < 19" flex="100" layout="row" layout-align="center">
         <md-button ng-click="thumbnailCtrl.getPage(page)" ng-repeat="page in thumbnailCtrl.pagesArray" ng-class="{'md-raised' : page == thumbnailCtrl.actualPage}"  class="md-accent">
           {{page}}
         </md-button>
@@ -52,13 +52,13 @@
     </md-content>
 
     <md-content flex="25">
-      <md-card layout="column" layout-align="start center">
+      <md-card layout="column">
         <md-toolbar layout-align="center center">
           Last Posts
         </md-toolbar>
-        <md-list >
+        <md-list layout="column" layout-align="space-around">
           <md-list-item>
-            <md-input-container>
+            <md-input-container flex>
               <label>limit thumbnails</label>
               <input ng-model="queryLimit" ng-change="thumbnailCtrl.getThumbnailsLimit(queryLimit); thumbnailCtrl.loading=true;" type="number" maxlength="50">
             </md-input-container>

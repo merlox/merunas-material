@@ -73,7 +73,7 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
   thumbnailCtrl.getThumbnailsLimit = function(limitQuery){
     $http.get('/api/thumbnails?limit='+limitQuery).success(function(response){
       thumbnailCtrl.loading = false;
-      thumbnailCtrl.thumbnailData = response;
+      thumbnailCtrl.thumbnailData = response.thumbnailsFound;
     }).catch(function(response){
       alert('Something went wrong');
     });

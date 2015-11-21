@@ -48,33 +48,29 @@ module.exports = function(app, express){
 
   app.route('/api/thumbnails/:title?')
     .get(function(req, res){
+      var actualPage;
+      var skipResults;
+      var totalPages;
+      if(actualPage==undefined || actualPage==null) actualPage=1;
+      if(skipResults==undefined || skipResults==null) skipResults=0;
+      if(req.query.page){
+        actualPage = req.query.page;
+        skipResults = (actualPage-1)*18;
+      }
       if(req.query.limit){
-        Thumbnail.find({}).sort('-createdAt').limit(req.query.limit).exec(function(err, thumbnailsFound){
+        totalPages = Math.floor(req.query.limit/18);
+      }
+      Thumbnail.find({}).sort('-createdAt').limit(18).skip(skipResults).exec(function(err, thumbnailsFound){
+        Thumbnail.count({}, function(err, count){
+          totalPages = count;
           if(err) return res.send(err);
-          res.json(thumbnailsFound);
-        });
-      }else{
-        var actualPage;
-        var skipResults;
-        var totalPages;
-        if(actualPage==undefined || actualPage==null) actualPage=1;
-        if(skipResults==undefined || skipResults==null) skipResults=0;
-        if(req.query.page){
-          actualPage = req.query.page;
-          skipResults = (actualPage-1)*18;
-        }
-        Thumbnail.find({}).sort('-createdAt').limit(18).skip(skipResults).exec(function(err, thumbnailsFound){
-          Thumbnail.count({}, function(err, count){
-            totalPages = count;
-            if(err) return res.send(err);
-            res.json({
-              thumbnailsFound,
-              actualPage: actualPage,
-              totalPages: totalPages
-            });
+          res.json({
+            thumbnailsFound,
+            actualPage: actualPage,
+            totalPages: totalPages
           });
         });
-      }
+      });
     })
     .post(function(req, res){
       var thumbnail = new Thumbnail();
