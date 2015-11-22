@@ -57,9 +57,8 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
       body: editBody
     }).success(function(response){
       $http.get('/api/thumbnails').success(function(response){
-        console.log(response);
         thumbnailCtrl.loading = false;
-        thumbnailCtrl.thumbnailData = response.data;
+        thumbnailCtrl.thumbnailData = response.thumbnailsFound;
       }).catch(function(response){
         console.log(response);
         thumbnailCtrl.loading = false;
@@ -70,13 +69,22 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
       thumbnailCtrl.responseError = 'Something went wrong';
     });
   };
-  thumbnailCtrl.getThumbnailsLimit = function(limitQuery){
-    $http.get('/api/thumbnails?limit='+limitQuery).success(function(response){
-      thumbnailCtrl.loading = false;
-      thumbnailCtrl.thumbnailData = response.thumbnailsFound;
-    }).catch(function(response){
-      alert('Something went wrong');
-    });
+  thumbnailCtrl.getThumbnailsLimit = function(limitQuery, pageQuery){
+    if(pageQuery){
+      $http.get('/api/thumbnails/search?limit='+limitQuery+'&page='+pageQuery).success(function(response){
+        thumbnailCtrl.loading = false;
+        thumbnailCtrl.thumbnailData = response.thumbnailsFound;
+      }).catch(function(response){
+        alert('Something went wrong');
+      });
+    }else{
+      $http.get('/api/thumbnails/search?limit='+limitQuery).success(function(response){
+        thumbnailCtrl.loading = false;
+        thumbnailCtrl.thumbnailData = response.thumbnailsFound;
+      }).catch(function(response){
+        alert('Something went wrong');
+      });
+    }
   };
   thumbnailCtrl.getPage = function(pageQuery){
     $http.get('/api/thumbnails?page='+pageQuery).success(function(response){
@@ -88,12 +96,11 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
     });
   };
   thumbnailCtrl.getLastPosts = function(){
-    $http.get('/api/thumbnails?limit=10').success(function(response){
+    $http.get('/api/thumbnails?lastPosts=10').success(function(response){
       thumbnailCtrl.loading = false;
       thumbnailCtrl.lastPosts = response.thumbnailsFound;
-      console.log(thumbnailCtrl.lastPosts);
     }).catch(function(response){
-      alert(response);
+      console.log('error'+response.error);
     });
   };
 });

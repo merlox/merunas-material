@@ -26,3 +26,14 @@ Las querys son
 y en express se guardan en:
 
 `req.query.busqueda`
+
+### si Hay un error ya sea en el server o en el cliente
+
+Colocar un minimo de 3 console.logs describiendo el proceso que deberia ocurrir en el caso de que funcionase correctamente
+
+ej:
+
+```javascript
+console.log('Aqui deberia ejecutarse la function');
+console.log('Aqui deberia recibirse el data del find()');
+```
