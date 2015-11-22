@@ -8,7 +8,7 @@
     <form layout="column" layout-align="center" enctype="multipart/form-data" method="post">
         <div ngf-drop ng-model="myFile" ngf-pattern="image/*" layout="column" layout-align="center center" class="dropzone-div">
           Drop image Here
-          <img-crop image="myFile  | ngfDataUrl" result-image="croppedDataUrl" area-min-size="50" area-type="square" result-image-size="600" ng-init="croppedDataUrl=''">
+          <img-crop image="myFile  | ngfDataUrl" result-image="croppedDataUrl" area-min-size="50" area-type="square" result-image-size="333" ng-init="croppedDataUrl=''">
           </img-crop>
 
           Select an image:

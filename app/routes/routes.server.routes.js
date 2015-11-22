@@ -59,18 +59,30 @@ module.exports = function(app, express){
       }
       if(req.query.limit){
         totalPages = Math.floor(req.query.limit/18);
-      }
-      Thumbnail.find({}).sort('-createdAt').limit(18).skip(skipResults).exec(function(err, thumbnailsFound){
-        Thumbnail.count({}, function(err, count){
-          totalPages = count;
-          if(err) return res.send(err);
-          res.json({
-            thumbnailsFound,
-            actualPage: actualPage,
-            totalPages: totalPages
+        Thumbnail.find({}).select('title').sort('-createdAt').limit(req.query.limit).exec(function(err, thumbnailsFound){
+          Thumbnail.count({}, function(err, count){
+            totalPages = count;
+            if(err) return res.send(err);
+            res.json({
+              thumbnailsFound,
+              actualPage: actualPage,
+              totalPages: totalPages
+            });
           });
         });
-      });
+      } else {
+        Thumbnail.find({}).sort('-createdAt').limit(18).skip(skipResults).exec(function(err, thumbnailsFound){
+          Thumbnail.count({}, function(err, count){
+            totalPages = count;
+            if(err) return res.send(err);
+            res.json({
+              thumbnailsFound,
+              actualPage: actualPage,
+              totalPages: totalPages
+            });
+          });
+        });
+      }
     })
     .post(function(req, res){
       var thumbnail = new Thumbnail();

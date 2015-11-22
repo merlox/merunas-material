@@ -87,4 +87,13 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
       alert('Something went wrong');
     });
   };
+  thumbnailCtrl.getLastPosts = function(){
+    $http.get('/api/thumbnails?limit=10').success(function(response){
+      thumbnailCtrl.loading = false;
+      thumbnailCtrl.lastPosts = response.thumbnailsFound;
+      console.log(thumbnailCtrl.lastPosts);
+    }).catch(function(response){
+      alert(response);
+    });
+  };
 });

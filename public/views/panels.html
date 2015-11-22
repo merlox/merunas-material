@@ -56,6 +56,17 @@
         <md-toolbar layout-align="center center">
           Last Posts
         </md-toolbar>
+        <md-list layout="column" layout-align="space-around" style="padding:0;">
+          <md-list-item ng-repeat="data in thumbnailCtrl.lastPosts">
+            <md-divider></md-divider>
+            {{data.title}}
+          </md-list-item>
+        </md-list>
+      </md-card>
+      <md-card layout="column">
+        <md-toolbar layout-align="center center">
+          Options
+        </md-toolbar>
         <md-list layout="column" layout-align="space-around">
           <md-list-item>
             <md-input-container flex>
@@ -65,14 +76,15 @@
             <md-divider></md-divider>
           </md-list-item>
           <md-list-item>
-            dudes
-            <md-divider></md-divider>
-          </md-list-item>
-          <md-list-item>
-            dudes
+            <md-button ng-click="thumbnailCtrl.getLastPosts(); thumbnailCtrl.loading=true;" class="md-raised">
+              Load last posts
+            </md-button>
           </md-list-item>
         </md-list>
       </md-card>
+
+
     </md-content>
+
 
 </md-content>
