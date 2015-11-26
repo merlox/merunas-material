@@ -71,6 +71,23 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
       thumbnailCtrl.responseError = 'Something went wrong';
     });
   };
+  thumbnailCtrl.getPage = function(pageQuery){
+    $http.get('/api/thumbnails?page='+pageQuery).success(function(response){
+      thumbnailCtrl.loading = false;
+      thumbnailCtrl.thumbnailData = response.thumbnailsFound;
+      thumbnailCtrl.actualPage = response.actualPage;
+    }).catch(function(response){
+      alert('Something went wrong');
+    });
+  };
+  thumbnailCtrl.selectIndex = function(index){
+    for (var i = 0; i < thumbnailCtrl.thumbnailData.length; i++) {
+      if(thumbnailCtrl.thumbnailData[i] == thumbnailCtrl.thumbnailData[index]){
+        thumbnailCtrl.value=thumbnailCtrl.thumbnailData[i];
+        return thumbnailCtrl.thumbnailData[i];
+      }
+    }
+  };
   thumbnailCtrl.getThumbnailsLimit = function(limitQuery, pageQuery){
     if(pageQuery){
       $http.get('/api/thumbnails/search?limit='+limitQuery+'&page='+pageQuery).success(function(response){
@@ -88,15 +105,6 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
       });
     }
   };
-  thumbnailCtrl.getPage = function(pageQuery){
-    $http.get('/api/thumbnails?page='+pageQuery).success(function(response){
-      thumbnailCtrl.loading = false;
-      thumbnailCtrl.thumbnailData = response.thumbnailsFound;
-      thumbnailCtrl.actualPage = response.actualPage;
-    }).catch(function(response){
-      alert('Something went wrong');
-    });
-  };
   thumbnailCtrl.getLastPosts = function(){
     $http.get('/api/thumbnails?lastPosts=10').success(function(response){
       thumbnailCtrl.loading = false;
@@ -105,4 +113,6 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
       console.log('error'+response.error);
     });
   };
+
+
 });

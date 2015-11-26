@@ -84,13 +84,7 @@ module.exports = function(app){
         thumbnail.save(function(err){
           if(err) return res.send(err);
           res.json({
-            message: 'Thumbnail added',
-            credentials: {
-              thumbnailTitle: thumbnail.thumbnailTitle,
-              thumbnailBody: thumbnail.thumbnailBody,
-              articleTitle: thumbnail.articleTitle,
-              articleBody: thumbnail.articleBody
-            }
+            message: 'Thumbnail added'
           });
         });
       });
