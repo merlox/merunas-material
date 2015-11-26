@@ -1,7 +1,7 @@
 {
-  "name": "angular-aria",
+  "name": "angular-sanitize",
   "version": "1.4.8",
-  "main": "./angular-aria.js",
+  "main": "./angular-sanitize.js",
   "ignore": [],
   "dependencies": {
     "angular": "1.4.8"

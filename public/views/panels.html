@@ -30,26 +30,25 @@
           <div layout="row" flex>
             <md-button ng-show="editing" ng-click="editing=false;" class="md-raised md-primary">
               Cancel</md-button>
-            <md-button ng-hide="editing" ng-click="thumbnailCtrl.removeThumbnail(data.title); thumbnailCtrl.loading=true; deletingThis=true;" class="md-raised md-warn">
+            <md-button ng-hide="editing" ng-click="thumbnailCtrl.removeThumbnail(data.thumbnailTitle); thumbnailCtrl.loading=true; deletingThis=true;" class="md-raised md-warn">
               Delete</md-button>
             <md-button ng-hide="editing" ng-click="editing=true;" class="md-raised md-primary">
               Edit</md-button>
-            <md-button ng-show="editing" ng-click="thumbnailCtrl.editThumbnail(data.title, editTitle, editBody); editing=false;" class="md-raised md-primary">
+            <md-button ng-show="editing" ng-click="thumbnailCtrl.editThumbnail(data.thumbnailTitle, editTitle, editBody); editing=false;" class="md-raised md-primary">
               Save</md-button>
           </div>
         </md-card-content>
         <md-divider></md-divider>
         <md-card-footer layout="row" layout-align="center">
-          <md-button ng-click="thumbnailCtrl.showArticle=true; value=thumbnailCtrl.selectIndex($index);" class="md-flat md-accent">
+          <md-button ng-click="thumbnailCtrl.showArticle=true; thumbnailCtrl.value=thumbnailCtrl.selectIndex($index);" class="md-flat md-accent">
             Leer artículo</md-button>
         </md-card-footer>
       </md-card>
 
-      <md-card ng-show="thumbnailCtrl.showArticle" flex layout-padding>
-        <h2>{{thumbnailCtrl.value.articleTitle}} <small>by merlox</small></h2>
-        <p>
-          {{thumbnailCtrl.value.articleBody}}
-        </p>
+      <md-card ng-show="thumbnailCtrl.showArticle" class="md-whiteframe-z2" flex layout-padding>
+        <p ng-bind-html="thumbnailCtrl.value.articleTitle"></p><small>by merlox</small>
+        <md-divider></md-divider>
+        <p ng-bind-html="thumbnailCtrl.value.articleBody"></p>
       </md-card>
 
       <div ng-hide="queryLimit < 19" flex="100" layout="row" layout-align="center">
@@ -67,7 +66,7 @@
         <md-list layout="column" layout-align="space-around" style="padding:0;">
           <md-list-item ng-repeat="data in thumbnailCtrl.lastPosts">
             <md-divider></md-divider>
-            {{data.title}}
+            {{data.thumbnailTitle}}
           </md-list-item>
         </md-list>
       </md-card>

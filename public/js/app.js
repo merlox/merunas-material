@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ui.router', 'ngMaterial', 'ngFileUpload', 'ngImgCrop']);
+var app = angular.module('myApp', ['ui.router', 'ngMaterial', 'ngFileUpload', 'ngImgCrop', 'ngSanitize']);
 
 app.controller('MainCtrl', function($http){
   var mainCtrl = this;

@@ -42,30 +42,18 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
   };
   thumbnailCtrl.removeThumbnail = function(myTitle){
     $http.delete('/api/thumbnails/'+myTitle).success(function(response){
-      $http.get('/api/thumbnails').success(function(response){
-        thumbnailCtrl.loading = false;
-        thumbnailCtrl.thumbnailData = response.thumbnailsFound;
-      }).catch(function(response){
-        thumbnailCtrl.loading = false;
-        thumbnailCtrl.responseError = response;
-      });
+      thumbnailCtrl.getThumbnails();
     }).catch(function(response){
       thumbnailCtrl.responseError = 'Something went wrong';
     });
   };
   thumbnailCtrl.editThumbnail = function(myTitle, editTitle, editBody){
     $http.put('/api/thumbnails/'+myTitle, {
-      title: editTitle,
-      body: editBody
+      thumbnailTitle: editTitle,
+      thumbnailBody: editBody
     }).success(function(response){
-      $http.get('/api/thumbnails').success(function(response){
-        thumbnailCtrl.loading = false;
-        thumbnailCtrl.thumbnailData = response.thumbnailsFound;
-      }).catch(function(response){
-        console.log(response);
-        thumbnailCtrl.loading = false;
-        thumbnailCtrl.responseError = response;
-      });
+      thumbnailCtrl.getLastPosts();
+      thumbnailCtrl.getThumbnails();
     }).catch(function(response){
       console.log(response);
       thumbnailCtrl.responseError = 'Something went wrong';
@@ -113,6 +101,4 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
       console.log('error'+response.error);
     });
   };
-
-
 });

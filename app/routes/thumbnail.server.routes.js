@@ -90,7 +90,7 @@ module.exports = function(app){
       });
     })
     .delete(function(req, res){
-      Thumbnail.findOneAndRemove({title: req.params.title}, function(err, thumbnailFound){
+      Thumbnail.findOneAndRemove({thumbnailTitle: req.params.title}, function(err, thumbnailFound){
         if (err) return res.send(err);
         console.log('Removed');
         res.json({
@@ -99,10 +99,16 @@ module.exports = function(app){
       });
     })
     .put(function(req, res){
-      Thumbnail.findOne({title: req.params.title}, function(err, thumbnailFound){
+      Thumbnail.findOne({thumbnailTitle: req.params.title}, function(err, thumbnailFound){
         if(err) return res.send('Error'+err);
-        thumbnailFound.title = req.body.title;
-        thumbnailFound.body = req.body.body;
+        console.log('params',req.params.title);
+        if(req.body.thumbnailTitle && req.body.thumbnailTitle != undefined){
+          thumbnailFound.thumbnailTitle = req.body.thumbnailTitle;
+        }
+        if(req.body.thumbnailBody && req.body.thumbnailBody != undefined){
+          thumbnailFound.thumbnailBody = req.body.thumbnailBody;
+        }
+        console.log('body',req.body.thumbnailBody);
         thumbnailFound.save(function(err){
           if(err) return res.send('Error'+err);
           console.log('updated: '+thumbnailFound.title);
