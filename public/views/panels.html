@@ -1,14 +1,16 @@
-<md-content ng-init="thumbnailCtrl.getThumbnails(); thumbnailCtrl.getLastPosts(); thumbnailCtrl.loading=true;" flex layout="row"  layout-align="center start">
+<md-content ng-init="thumbnailCtrl.getThumbnails(); thumbnailCtrl.getLastPosts(); thumbnailCtrl.getRandomPostsTitles(); thumbnailCtrl.loading=true;" flex layout="row"  layout-align="center start">
+<!--error displaying---------------------------------------------------------------------------------------->
     <p flex="100" ng-show="thumbnailCtrl.responseError">
       Error: {{thumbnailCtrl.responseError}}
     </p>
+<!--main thumbnails area------------------------------------------------------------------------------------>
     <md-content flex="75" layout="row" layout-wrap layout-align="space-around start">
       <div flex="100" ng-if="thumbnailCtrl.loading" layout="row" layout-align="center center">
         <md-progress-circular ng-show="thumbnailCtrl.loading" md-mode="indeterminate"></md-progress-circular>
         <h3 ng-show="thumbnailCtrl.loading">Loading...</h3>
       </div>
 
-<!--thumbnails-->
+ <!--thumbnails-->
       <md-card ng-hide="thumbnailCtrl.showArticle" ng-repeat="data in thumbnailCtrl.thumbnailData" flex="30">
         <img ng-show="data.imageName" ng-src="{{'uploads/'+data.imageName}}" alt="" />
         <img ng-hide="data.imageName" ng-src="{{'uploads/notfound.png'}}" alt="" />
@@ -46,7 +48,7 @@
         </md-card-footer>
       </md-card>
 
-<!--article-->
+ <!--article-->
       <md-card ng-show="thumbnailCtrl.showArticle" class="md-whiteframe-z2" flex>
         <md-toolbar layout-align="center center">
           <h1 ng-bind-html="thumbnailCtrl.value.articleTitle"></h1><small>by merlox</small>
@@ -55,15 +57,17 @@
         <div layout-padding ng-bind-html="thumbnailCtrl.value.articleBody"></div>
       </md-card>
 
-<!--paginator-->
+ <!--paginator-->
       <div ng-hide="queryLimit < 19 || thumbnailCtrl.showArticle" flex="100" layout="row" layout-align="center">
         <md-button ng-repeat="page in thumbnailCtrl.pagesArray" ng-click="queryLimit ? thumbnailCtrl.getThumbnailsLimit(queryLimit, page) : thumbnailCtrl.getPage(page)" ng-class="{'md-raised' : page == thumbnailCtrl.actualPage}"  class="md-accent">
           {{page}}
         </md-button>
       </div>
-    </md-content>
+    </md-content><!--close thumbnails main area-->
 
+<!--sidebar----------------------------------------------------------------------------------------------->
     <md-content flex="25">
+ <!--last 10 Posts-->
       <md-card layout="column">
         <md-toolbar layout-align="center center">
           Last Posts
@@ -75,6 +79,7 @@
           </md-list-item>
         </md-list>
       </md-card>
+ <!--options-->
       <md-card layout="column">
         <md-toolbar layout-align="center center">
           Options
@@ -90,6 +95,20 @@
           </md-list-item>
         </md-list>
       </md-card>
-    </md-content>
+ <!--random posts-->
+     <md-card layout="column">
+       <md-toolbar layout-align="center center">
+         Random posts
+       </md-toolbar>
+       <md-list layout="column" layout-align="space-around" style="padding:0;">
+         <md-progress-linear md-mode="indeterminate" ng-if="thumbnailCtrl.loading"></md-progress-linear>
+         <md-list-item ng-repeat="data in thumbnailCtrl.randomTitles">
+           {{data.thumbnailTitle}}
+           <md-divider></md-divider>
+         </md-list-item>
+       </md-list>
+     </md-card>
 
-</md-content>
+    </md-content><!--sidebar close-->
+
+</md-content><!--view close-->

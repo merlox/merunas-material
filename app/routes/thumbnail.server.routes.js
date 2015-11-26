@@ -33,6 +33,16 @@ module.exports = function(app){
 
   });
 
+  app.get('/api/thumbnails/randomPosts', function(req, res){
+    Thumbnail.findRandom({}, {thumbnailTitle: 1}, {limit: 20}, function(err, results){
+      if(err) return res.send(err);
+      res.json({
+        message: 'found successfully',
+        randomTitlesFound: results,
+      });
+    });
+  });
+
   app.route('/api/thumbnails/:title?')
     .get(function(req, res){
       if(req.query.lastPosts){

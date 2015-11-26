@@ -102,4 +102,11 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
       console.log('error'+response.error);
     });
   };
+  thumbnailCtrl.getRandomPostsTitles = function(){
+    $http.get('/api/thumbnails/randomPosts').success(function(response){
+      thumbnailCtrl.randomTitles = response.randomTitlesFound;
+    }).catch(function(response){
+      console.log('error', response.error);
+    });
+  };
 });
