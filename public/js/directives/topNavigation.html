@@ -1,5 +1,8 @@
 <md-toolbar layout="row" layout-align="space-between center" class="md-primary md-hue-2">
   <img src="../images/logo.svg" width="200" alt="" />
+  <md-button ng-show="thumbnailCtrl.showArticle" ng-click="thumbnailCtrl.showArticle=false;" class="md-raised md-warn">
+    Back
+  </md-button>
   <div flex></div>
   <md-button class="md-raised md-primary" ui-sref="home">Inicio</md-button>
   <md-button class="md-raised md-primary" ui-sref="form">Añadir articulo</md-button>

@@ -41,6 +41,11 @@ module.exports = function(app){
         var actualPage;
         var skipResults;
         var totalPages;
+        //Total pages count
+        Thumbnail.count({}, function(err, count){
+          if(err) return res.send(err);
+          totalPages = count;
+        });
         if(actualPage==undefined || actualPage==null) actualPage=1;
         if(skipResults==undefined || skipResults==null) skipResults=0;
         if(req.query.page != null || req.query.page != undefined){
@@ -48,16 +53,14 @@ module.exports = function(app){
           skipResults = (actualPage-1)*18;
         }
         Thumbnail.find({}).sort('-createdAt').limit(18).skip(skipResults).exec(function(err, thumbnailsFound){
-          Thumbnail.count({}, function(err, count){
-            totalPages = count;
-            if(err) return res.send(err);
-            return res.json({
-              thumbnailsFound,
-              actualPage: actualPage,
-              totalPages: totalPages
-            });
+          if(err) return res.send(err);
+          return res.json({
+            thumbnailsFound,
+            actualPage: actualPage,
+            totalPages: totalPages
           });
         });
+
       }
     })
     .post(function(req, res){

@@ -5,7 +5,8 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
       thumbnailCtrl.loading = false;
       thumbnailCtrl.thumbnailData = response.thumbnailsFound;
       thumbnailCtrl.actualPage = response.actualPage;
-      var totalPages = Math.floor(response.totalPages/18);
+      //Paginator calculation
+      var totalPages = Math.ceil(response.totalPages/18);
       var range = [];
       for (var i = 1; i <= totalPages; i++) {
         range.push(i);
