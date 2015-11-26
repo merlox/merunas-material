@@ -1,4 +1,4 @@
-app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
+app.controller('ThumbnailCtrl', function($http, Upload, $timeout, $location, $anchorScroll){
   thumbnailCtrl = this;
   thumbnailCtrl.getThumbnails = function(){
     $http.get('/api/thumbnails').success(function(response){
@@ -108,5 +108,9 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
     }).catch(function(response){
       console.log('error', response.error);
     });
+  };
+  thumbnailCtrl.scrollToTop = function(){
+    $location.hash('scrollTop');
+    $anchorScroll();
   };
 });
