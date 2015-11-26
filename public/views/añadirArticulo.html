@@ -3,8 +3,9 @@
 <md-toolbar layout-align="center start" class="md-primary">
   Creador de thumbnails
 </md-toolbar>
+
 <md-content flex layout="row">
-  <md-sidenav md-is-locked-open="true" style="height:100%;" class="md-whiteframe-z1">
+  <md-sidenav md-is-locked-open="true" flex="20" class="md-whiteframe-z1">
     <form layout="column" layout-align="center" enctype="multipart/form-data" method="post">
         <div ngf-drop ng-model="myFile" ngf-pattern="image/*" layout="column" layout-align="center center" class="dropzone-div">
           Select or drop image:
@@ -27,7 +28,7 @@
     </form>
   </md-sidenav>
 
-  <md-card class="md-whiteframe-z1" layout="column">
+  <md-card class="md-whiteframe-z1" flex="20" layout="column">
     <img ng-show="myFile" ng-src="{{croppedDataUrl}}" alt="" />
     <img ng-hide="myFile" src="../uploads/preview-image.jpg" alt="" />
     <md-divider ></md-divider>
@@ -43,8 +44,7 @@
     </md-card-footer>
   </md-card>
 
-<!--Add html article converted from markdown-->
-
+  <!--Add html article converted from markdown-->
   <md-card flex>
     <md-input-container style="padding: 0;">
       <label>Title</label>
@@ -55,7 +55,6 @@
       <textarea ng-model="thumbnailCtrl.articleBody" name="name" rows="20" cols="40" required></textarea>
     </md-input-container>
   </md-card>
-
 </md-content>
 
 <h3>{{thumbnailCtrl.response}}</h3>
