@@ -10,7 +10,6 @@ md-card-footer *{
   word-wrap:break-word;
 }
 .dropzone-div{
-  background-color: rgba(0, 0, 0, 0.19);
-  background-image: url('uploads/dropFilesHere.png');
+  background-color: rgba(0, 0, 0, 0.05);
   height: 300px;
 }

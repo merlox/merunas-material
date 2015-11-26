@@ -1,11 +1,14 @@
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 var ThumbnailSchema = new Schema({
-  title: {
+  thumbnailTitle: {
     type: String,
     required: 'Se necesita un titulo'
   },
-  body: String,
+  thumbnailBody: {
+    type: String,
+    required: 'Contenido de la thumbnail required'
+  },
   imagePath: {
     type: String,
     required: 'Image needed'
@@ -13,6 +16,14 @@ var ThumbnailSchema = new Schema({
   imageName: {
     type: String,
     required: 'Image name required'
+  },
+  articleTitle: {
+    type: String,
+    required: 'Article title required'
+  },
+  articleBody: {
+    type: String,
+    required: 'Article body required'
   },
   createdAt: {
     type: Date,

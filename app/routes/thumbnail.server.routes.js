@@ -77,15 +77,19 @@ module.exports = function(app){
         thumbnail.imagePath = req.files[0].path;
         thumbnail.imageName = req.files[0].filename;
         console.log('imageName :'+thumbnail.imageName);
-        thumbnail.title = req.body.title;
-        thumbnail.body = req.body.body;
+        thumbnail.thumbnailTitle = req.body.thumbnailTitle;
+        thumbnail.thumbnailBody = req.body.thumbnailBody;
+        thumbnail.articleTitle = req.body.articleTitle;
+        thumbnail.articleBody = req.body.articleBody;
         thumbnail.save(function(err){
           if(err) return res.send(err);
           res.json({
             message: 'Thumbnail added',
             credentials: {
-              title: thumbnail.title,
-              content: thumbnail.body
+              thumbnailTitle: thumbnail.thumbnailTitle,
+              thumbnailBody: thumbnail.thumbnailBody,
+              articleTitle: thumbnail.articleTitle,
+              articleBody: thumbnail.articleBody
             }
           });
         });

@@ -21,7 +21,13 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
       Upload.upload({
         url: '/api/thumbnails',
         method: 'POST',
-        data: {file: Upload.dataUrltoBlob(myFile), title: thumbnailCtrl.title, body: thumbnailCtrl.body}
+        data: {
+          file: Upload.dataUrltoBlob(myFile),
+          thumbnailTitle: thumbnailCtrl.thumbnailTitle,
+          thumbnailBody: thumbnailCtrl.thumbnailBody,
+          articleTitle: thumbnailCtrl.articleTitle,
+          articleBody: thumbnailCtrl.articleBody
+        }
       }).then(function(response){
         $timeout(function(){
           myFile.result = response.data;
@@ -29,10 +35,6 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout){
           thumbnailCtrl.response = response.data.message;
           thumbnailCtrl.credentials = response.data.credentials;
         });
-        if(response.status > 0){
-          thumbnailCtrl.loading = false;
-          thumbnailCtrl.response = response.status + ':' + response.data;
-        }
       }, function(responseError){
         if(responseError) thumbnailCtrl.responseError = responseError;
       });
