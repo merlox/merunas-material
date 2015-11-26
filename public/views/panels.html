@@ -49,12 +49,17 @@
       </md-card>
 
  <!--article-->
-      <md-card ng-show="thumbnailCtrl.showArticle" class="md-whiteframe-z2" flex>
+      <md-card layout-align="center center" ng-show="thumbnailCtrl.showArticle" class="md-whiteframe-z2" flex>
         <md-toolbar layout-align="center center">
-          <h1 ng-bind-html="thumbnailCtrl.value.articleTitle"></h1><small>by merlox</small>
+          <div ng-bind-html="thumbnailCtrl.value.articleTitle"></div>
         </md-toolbar>
+        <div>
+          <small>by <b>merlox</b>
+            {{thumbnailCtrl.value.createdAt | date}}
+          </small>
+        </div>
         <md-divider></md-divider>
-        <div layout-padding ng-bind-html="thumbnailCtrl.value.articleBody"></div>
+        <div style="padding:10px 50px;" ng-bind-html="thumbnailCtrl.value.articleBody"></div>
       </md-card>
 
  <!--paginator-->
@@ -66,7 +71,7 @@
     </md-content><!--close thumbnails main area-->
 
 <!--sidebar----------------------------------------------------------------------------------------------->
-    <md-content flex="25">
+    <md-content flex="25" ng-show="!thumbnailCtrl.isSidebarHidden">
  <!--last 10 Posts-->
       <md-card layout="column">
         <md-toolbar layout-align="center center">
