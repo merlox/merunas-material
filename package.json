@@ -7,8 +7,13 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "latest",
+    "cookie-parser": "^1.4.0",
+    "crypto": "0.0.3",
     "express": "latest",
+    "express-session": "^1.12.1",
     "mongoose": "latest",
-    "multer": "^1.1.0"
+    "multer": "^1.1.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
   }
 }

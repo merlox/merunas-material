@@ -1,4 +1,11 @@
-var app = angular.module('myApp', ['ui.router', 'ngMaterial', 'ngFileUpload', 'ngImgCrop', 'ngSanitize']);
+var app = angular.module('myApp',
+[
+  'ui.router',
+  'ngMaterial',
+  'ngFileUpload',
+  'ngImgCrop',
+  'ngSanitize',
+]);
 
 app.controller('MainCtrl', function($http){
   var mainCtrl = this;
@@ -80,13 +87,21 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
       templateUrl: 'views/showUsers.html'
     })
     .state('form', {
-      url: '/users/form',
+      url: '/form',
       templateUrl: 'views/añadirArticulo.html',
       controller: 'ThumbnailCtrl as thumbnailCtrl'
     })
     .state('home', {
       url: '/',
       templateUrl: 'views/panels.html',
+    })
+    .state('signin', {
+      url: '/signin',
+      templateUrl: 'views/signin.html'
+    })
+    .state('signup', {
+      url: '/signup',
+      templateUrl: 'views/signup.html'
     });
 
   $urlRouterProvider.otherwise('/');

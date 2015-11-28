@@ -1,0 +1,19 @@
+<md-content ng-controller="LoginCtrl as loginCtrl" layout="column" layout-align="center">
+  <h1>Sign up form</h1>
+  <md-input-container>
+    <label>Username</label>
+    <input ng-model="loginCtrl.username" type="text">
+  </md-input-container>
+  <md-input-container>
+    <label>Password</label>
+    <input ng-model="loginCtrl.password" type="text">
+  </md-input-container>
+  <md-input-container>
+    <label>Email</label>
+    <input ng-model="loginCtrl.email" type="text">
+  </md-input-container>
+
+  <md-button ng-click="loginCtrl.signUp()" class="md-raised md-primary">
+    Sign Up
+  </md-button>
+</md-content>

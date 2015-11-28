@@ -30,7 +30,7 @@
             </md-input-container>
           </p>
           <md-progress-linear ng-if="deletingThis"></md-progress-linear>
-          <div layout="row" flex>
+          <div ng-if="thumbnailCtrl.adminMode" layout="row" flex>
             <md-button ng-show="editing" ng-click="editing=false;" class="md-raised md-primary">
               Cancel</md-button>
             <md-button ng-hide="editing" ng-click="thumbnailCtrl.removeThumbnail(data.thumbnailTitle); thumbnailCtrl.loading=true; deletingThis=true;" class="md-raised md-warn">

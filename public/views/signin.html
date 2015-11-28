@@ -1,0 +1,15 @@
+<md-content ng-controller="LoginCtrl as loginCtrl" layout="column" layout-align="center">
+  <h1>Login form</h1>
+  <md-input-container>
+    <label>Username</label>
+    <input ng-model="loginCtrl.username" type="text">
+  </md-input-container>
+  <md-input-container>
+    <label>Password</label>
+    <input ng-model="loginCtrl.password" type="text">
+  </md-input-container>
+
+  <md-button ng-click="loginCtrl.signIn()" class="md-raised md-primary">
+    Sign In
+  </md-button>
+</md-content>
