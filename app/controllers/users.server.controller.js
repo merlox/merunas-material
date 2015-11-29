@@ -6,7 +6,6 @@ exports.signup = function(req, res, next){
     var user = new User(req.body);
     user.provider = 'local';
     user.save(function(err){
-      console.log('User: ', user);
       if(err) {
         console.log(err);
         return res.redirect('/signup');

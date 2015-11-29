@@ -79,3 +79,23 @@ SUMMARY PASSPORT METHODS AND MIDDLEWARE
 - req.logout()
 - req.isAuthenticated()
 - req.isUnAuthenticated()
+
+## Definicion de callback
+Una función asignada or pasada como un argument.
+
+```javascript
+var yo = function(){} //<-- callback function
+```
+
+```javascript
+yo(function(){}) //<-- callback function
+```
+
+That is what we call a callback.
+
+### Cuando se ejecuta el callback?
+Cuando un callback se ejecuta _sometime in the future_ osea que es asincrono, esto quiere decir que el código _nunca se ejecutará_ mientras el síncrono, osea el código principal, esté en funcionamiento, esto es debido a que javascript es **singlethread**.
+
+**Por ello ejecutará los callbacks uno por uno tras el código síncrono principal**
+
+Los callback se crean `síncronomicamente` pero ejecutados `asíncronicamente`.

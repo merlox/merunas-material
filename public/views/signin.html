@@ -1,15 +1,25 @@
 <md-content ng-controller="LoginCtrl as loginCtrl" layout="column" layout-align="center">
-  <h1>Login form</h1>
-  <md-input-container>
-    <label>Username</label>
-    <input ng-model="loginCtrl.username" type="text">
-  </md-input-container>
-  <md-input-container>
-    <label>Password</label>
-    <input ng-model="loginCtrl.password" type="text">
-  </md-input-container>
+<!--Loading spinner-->
+  <div ng-if="loginCtrl.loading" layout="row" layout-align="center center" flex>
+    <md-progress-circular ng-show="loginCtrl.loading" md-mode="indeterminate"></md-progress-circular>
+    <h3 ng-show="loginCtrl.loading">Loading...</h3>
+  </div>
+<!--Content-->
+  <md-card flex>
+    <md-card-content flex>
+      <h1>Login form</h1>
+      <md-input-container>
+        <label>Username</label>
+        <input ng-model="loginCtrl.username" type="text">
+      </md-input-container>
+      <md-input-container>
+        <label>Password</label>
+        <input ng-model="loginCtrl.password" type="text">
+      </md-input-container>
 
-  <md-button ng-click="loginCtrl.signIn()" class="md-raised md-primary">
-    Sign In
-  </md-button>
+      <md-button ng-click="loginCtrl.$users.signIn(loginCtrl.username, loginCtrl.password)" class="md-raised md-primary">
+        Sign In
+      </md-button>
+    </md-card-content>
+  </md-card>
 </md-content>

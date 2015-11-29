@@ -33,15 +33,37 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js" charset="utf-8"></script>
 
     <script src="js/app.js" charset="utf-8"></script>
-    <script src="js/directives/topNavigation.directive.js"></script>
     <script src="js/directives/adminPowers.directive.js"></script>
     <script src="js/controllers/Thumbnail.client.controller.js"></script>
     <script src="js/controllers/Login.client.controller.js"></script>
+    <script src="js/services/Users.service.js"></script>
   </head>
   <body ng-controller="ThumbnailCtrl as thumbnailCtrl" layout="column" ng-cloak>
 
-    <top-navigation></top-navigation>
+    <md-toolbar  id="scrollTop" layout="row" layout-align="space-between center" class="md-primary md-hue-2">
+      <img src="../images/logo.svg" width="200" alt="The top ten web logo" />
+      <div flex></div>
+      <md-button ng-show="thumbnailCtrl.showArticle" ng-click="thumbnailCtrl.scrollToTop(); thumbnailCtrl.showArticle=false;" class="md-warn">
+        Back
+      </md-button>
+      <md-button class="md-raised md-primary" ui-sref="home">Inicio</md-button>
+      <md-button ng-if="thumbnailCtrl.adminMode" class="md-raised md-primary" ui-sref="form">Añadir articulo</md-button>
+      <md-button ng-show="!thumbnailCtrl.isSidebarHidden" ng-click="thumbnailCtrl.isSidebarHidden=!thumbnailCtrl.isSidebarHidden" class="md-raised md-primary">Hide sidebar</md-button>
+      <md-button ng-show="thumbnailCtrl.isSidebarHidden" ng-click="thumbnailCtrl.isSidebarHidden=!thumbnailCtrl.isSidebarHidden" class="md-raised md-accent">Show sidebar</md-button>
+      <md-button ng-click="thumbnailCtrl.adminMode=!thumbnailCtrl.adminMode" ng-show ="thumbnailCtrl.adminMode" class="md-raised md-primary">Turn off admin mode</md-button>
+      <md-button ng-click="thumbnailCtrl.adminMode=!thumbnailCtrl.adminMode" ng-show="!thumbnailCtrl.adminMode" class="md-raised md-accent">Turn on admin mode</md-button>
+      <div ng-controller="LoginCtrl as loginCtrl">
+        <md-button ng-show="!loginCtrl.$users.loggedIn" ui-sref="signin" class="md-raised md-primary">Sign In</md-button>
+        <md-button ng-show="!loginCtrl.$users.loggedIn" ui-sref="signup" class="md-raised md-primary">Sign Up</md-button>
+        <md-button ng-show="loginCtrl.$users.loggedIn" ng-click="loginCtrl.$users.signOut()" class="md-raised md-primary">Sign Out</md-button>
+        <md-button ng-show="loginCtrl.$users.loggedIn" class="md-primary">
+          Logged as: {{loginCtrl.$users.name}}
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-progress-linear ng-show="loginCtrl.$users.loading" md-mode="indeterminate"></md-progress-linear>
 
     <ui-view></ui-view>
+
   </body>
 </html>

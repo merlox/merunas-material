@@ -89,11 +89,10 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
     .state('form', {
       url: '/form',
       templateUrl: 'views/añadirArticulo.html',
-      controller: 'ThumbnailCtrl as thumbnailCtrl'
     })
     .state('home', {
       url: '/',
-      templateUrl: 'views/panels.html',
+      templateUrl: 'views/panels.html'
     })
     .state('signin', {
       url: '/signin',
