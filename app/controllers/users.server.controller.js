@@ -1,6 +1,6 @@
 var User = require('../models/user.server.model.js');
 
-exports.signup = function(req, res, next){
+exports.signup = function(req, res){
   var configPassport = require('../../config/passport.js')();
   if(!req.user){
     var user = new User(req.body);
@@ -19,7 +19,6 @@ exports.signup = function(req, res, next){
     return res.json({message:'Redirecting to /home'});
   }
 };
-
 exports.signout = function(req, res){
   req.logout();
   res.json({message: 'Redirecting to /signin'});

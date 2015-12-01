@@ -1,10 +1,10 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var crypto = require('crypto');
-var UserSchema = new Schema({
+var mongoose = require('mongoose'),
+  Schema = mongoose.Schema,
+  findOrCreate = require('mongoose-findorcreate'),
+  crypto = require('crypto'),
+  UserSchema = new Schema({
   email: {
-    type: String,
-    match: [/.+\@.+\..+/, "Please fill a valid e-mail address"]
+    type: String
   },
   username: {
     type: String,
@@ -12,8 +12,7 @@ var UserSchema = new Schema({
     required: 'Your name'
   },
   password: {
-    type: String,
-    required: 'You need a password'
+    type: String
   },
   phoneNumber: {
     type: Number,
@@ -21,8 +20,7 @@ var UserSchema = new Schema({
   },
   salt: String,
   provider: {
-    type: String,
-    required: 'Provider required'
+    type: String
   },
   providerId: String,
   providerData: {},
@@ -31,6 +29,8 @@ var UserSchema = new Schema({
     default: Date.now
   }
 });
+
+UserSchema.plugin(findOrCreate);
 
 UserSchema.pre('save', function(next){
   if(this.password){
@@ -46,24 +46,6 @@ UserSchema.methods.hashPassword = function(password){
 
 UserSchema.methods.authenticate = function(password){
   return this.password === this.hashPassword(password);
-};
-
-UserSchema.statics.findUniqueUsername = function(username, suffix, callback){
-  var _this = this;
-  var possibleUsername = username + (suffix || '');
-  _this.findOne({
-    username: possibleUsername
-  }, function(err, user){
-    if(!err){
-      if(!user){
-        callback(possibleUsername);
-      }else{
-        return _this.findUniqueUsername(username, (suffix || 0)+1, callback);
-      }
-    }else{
-      callback(null);
-    }
-  });
 };
 
 UserSchema.set('toJSON', {

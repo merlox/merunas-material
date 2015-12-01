@@ -1,6 +1,8 @@
+var passport = require('passport'),
+User = require('../app/models/user.server.model.js');
+
 module.exports = function(){
-  var passport = require('passport');
-  var User = require('../app/models/user.server.model.js');
+  //movido de sitio lo de arriba, puede dar errores
   passport.serializeUser(function(user, done){
     done(null, user.id);
   });
@@ -12,4 +14,7 @@ module.exports = function(){
     });
   });
   require('./strategies/local.js')();
+  require('./strategies/twitter.js')();
+  require('./strategies/facebook.js')();
+  require('./strategies/google.js')();
 };

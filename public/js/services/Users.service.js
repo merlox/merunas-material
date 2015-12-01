@@ -1,6 +1,15 @@
 app.factory('$users', function($http, $q, $state){
   var $users = {};
 
+  $users.twitter = function(){
+    window.location = "/auth/twitter";
+  };
+  $users.facebook = function(){
+    window.location ="/auth/facebook";
+  };
+  $users.google = function(){
+    window.location = "/auth/google";
+  };
   $users.signIn = function(myUsername, myPassword){
     $users.loading = true;
     return $http.post('/signin', {
@@ -25,6 +34,7 @@ app.factory('$users', function($http, $q, $state){
       $state.go('home');
       //Show acc created msg
       console.log('Account created', response);
+      $users.name = myUsername;
       $users.loggedIn = true;
       $users.loading = false;
     }).catch(function(response){
