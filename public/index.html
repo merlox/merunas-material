@@ -51,11 +51,12 @@
       <md-button ng-if="thumbnailCtrl.adminMode" class="md-raised md-primary" ui-sref="form">Añadir articulo</md-button>
       <md-button ng-show="!thumbnailCtrl.isSidebarHidden" ng-click="thumbnailCtrl.isSidebarHidden=!thumbnailCtrl.isSidebarHidden" class="md-raised md-primary">Hide sidebar</md-button>
       <md-button ng-show="thumbnailCtrl.isSidebarHidden" ng-click="thumbnailCtrl.isSidebarHidden=!thumbnailCtrl.isSidebarHidden" class="md-raised md-accent">Show sidebar</md-button>
-      <div ng-controller="LoginCtrl as loginCtrl">
+      <div ng-controller="LoginCtrl as loginCtrl" layout="row" layout-align="center center">
         <md-button ng-show="!loginCtrl.$users.loggedIn" ng-disabled="loginCtrl.$users.loading" ui-sref="signin" class="md-raised md-primary">Sign In</md-button>
         <md-button ng-show="loginCtrl.$users.name || loginCtrl.$users.loggedIn" ng-click="loginCtrl.$users.signOut()" ng-disabled="loginCtrl.$users.loading" class="md-raised md-primary">Sign Out</md-button>
         <md-button ng-show="loginCtrl.$users.name || loginCtrl.$users.loggedIn" class="md-primary">
-          Logged as: {{loginCtrl.$users.name}}
+          <span style="float:left; margin-top:6px;">Logged as: {{loginCtrl.$users.name}}</span>
+          <img ng-src="{{loginCtrl.$users.userImage}}" style="margin-left:5px; float:right;" alt=""/>
         </md-button>
       </div>
     </md-toolbar>

@@ -3,8 +3,7 @@ var User = require('../models/user.server.model.js');
 module.exports = function(app, express){
   app.use('/', express.static(rootPath+'/public'));
   app.all('/admin/*', function(req, res, next){
-    if(req.user){
-      console.log(req.user)
+    if(req.session.username === 'Merunas Grincalaitis' || req.session.username === 'Merlox' || req.session.username === 'Merlox Gr'){
       next();
     }else{
       res.redirect('/');

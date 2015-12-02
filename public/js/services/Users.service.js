@@ -4,13 +4,21 @@ app.factory('$users', function($http, $state, $location, $cookies){
   (function setCookie(){
     var CookieDate = new Date;
     var urlUsername = ($location.search()).username;
+    var urlImage = ($location.search()).image;
     CookieDate.setFullYear(CookieDate.getFullYear()+1);
     if($cookies.get('username')){
       $users.name = $cookies.get('username');
     }
+    if($cookies.get('userImage')){
+      $users.userImage = $cookies.get('userImage');
+    }
     if (urlUsername) {
       $cookies.put('username', urlUsername, {expires: CookieDate.toGMTString()}); //expires 1 year
       $users.name = urlUsername;
+    }
+    if(urlImage){
+      $cookies.put('userImage', urlImage, {expires: CookieDate.toGMTString()});
+      $users.userImage = urlImage;
     }
   })();
 
@@ -66,8 +74,8 @@ app.factory('$users', function($http, $state, $location, $cookies){
       $users.loggedIn = false;
       $users.loading = false;
       $users.name = '';
-      $cookies.delete('username');
-      console.log($cookies.getAll());
+      $cookies.remove('username');
+      $cookies.remove('userImage');
     }).catch(function(response){
       console.log('Error', response);
     });

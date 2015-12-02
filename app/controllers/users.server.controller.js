@@ -21,5 +21,6 @@ exports.signup = function(req, res){
 };
 exports.signout = function(req, res){
   req.logout();
+  req.session.destroy();
   res.json({message: 'Redirecting to /signin'});
 };

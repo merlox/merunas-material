@@ -9,7 +9,7 @@ var express = require('express'),
 global.rootPath = path.resolve(__dirname);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(expressSession({secret: 'merlox cat', resave: true, saveUninitialized: false}));
+app.use(expressSession({secret: 'merlox cat', resave: true ,saveUninitialized: false}));
 mongoose.connect(config.dbUrl);
 var port = process.env.PORT || 8080;
 

@@ -1,67 +1,65 @@
-<!--Login-------------------------------------------------->
-<md-content ng-controller="LoginCtrl as loginCtrl" layout="column" layout-align="center">
-<!--Loading spinner-->
-  <div ng-if="loginCtrl.$users.loading" layout="row" layout-align="center center" flex>
-    <md-progress-circular ng-show="loginCtrl.$users.loading" md-mode="indeterminate"></md-progress-circular>
-    <h3 ng-show="loginCtrl.$users.loading">Loading...</h3>
-  </div>
-<!--Content-->
-  <md-card flex>
-    <md-card-content flex>
-      <h1>Login user</h1>
-      <md-divider></md-divider>
-      <md-button ng-click="loginCtrl.$users.twitter()" class="md-raised">Use Twitter</md-button>
-      <md-button ng-click="loginCtrl.$users.facebook()" class="md-raised">Use Facebook</md-button>
-      <md-button ng-click="loginCtrl.$users.google()" class="md-raised">Use google</md-button>
-      <md-divider></md-divider>
-      <md-input-container>
-        <label>Username</label>
-        <input ng-model="loginCtrl.username" type="text">
-      </md-input-container>
-      <md-input-container>
-        <label>Password</label>
-        <input ng-model="loginCtrl.password" type="text">
-      </md-input-container>
+<md-content layout="row" flex layout-align="center center">
 
-      <md-button ng-click="loginCtrl.$users.signIn(loginCtrl.username, loginCtrl.password)" ng-disabled="loginCtrl.$users.loading" class="md-raised md-primary">
-        Sign In
-      </md-button>
-    </md-card-content>
-  </md-card>
-</md-content>
+  <!--Login-------------------------------------------------->
+  <md-content ng-controller="LoginCtrl as loginCtrl" flex="70" layout="column" layout-align="center">
+  <!--Loading spinner-->
+    <div ng-if="loginCtrl.$users.loading" layout="row" layout-align="center center" flex>
+      <md-progress-circular ng-show="loginCtrl.$users.loading" md-mode="indeterminate"></md-progress-circular>
+      <h3 ng-show="loginCtrl.$users.loading">Loading...</h3>
+    </div>
+  <!--Content-->
+    <md-card flex>
+      <md-card-content flex>
+        <h1>Login user</h1>
+        <md-divider></md-divider>
+        <md-button ng-click="loginCtrl.$users.twitter()" class="md-raised md-accent">Use Twitter</md-button>
+        <md-button ng-click="loginCtrl.$users.facebook()" class="md-raised md-accent md-hue-3">Use Facebook</md-button>
+        <md-button ng-click="loginCtrl.$users.google()" class="md-raised md-warn">Use google</md-button>
+        <md-divider></md-divider>
 
-<!--Register-------------------------------------------------->
-<md-content ng-controller="LoginCtrl as loginCtrl" layout="column" layout-align="center">
-<!--Loading spinner-->
-  <div ng-if="loginCtrl.$users.loading" layout="row" layout-align="center center" flex>
-    <md-progress-circular ng-show="loginCtrl.$users.loading" md-mode="indeterminate"></md-progress-circular>
-    <h3 ng-show="loginCtrl.$users.loading">Loading...</h3>
-  </div>
-<!--Content-->
-  <md-card flex>
-    <md-card-content flex>
-      <h1>Register new user</h1>
-      <md-divider></md-divider>
-      <md-button ng-click="loginCtrl.$users.twitter" class="md-raised">Use Twitter</md-button>
-      <md-button ng-click="loginCtrl.$users.facebook" class="md-raised">Use Facebook</md-button>
-      <md-button ng-click="loginCtrl.$users.google" class="md-raised">Use google</md-button>
-      <md-divider></md-divider>
-      <md-input-container>
-        <label>Username</label>
-        <input ng-model="loginCtrl.username" type="text">
-      </md-input-container>
-      <md-input-container>
-        <label>Password</label>
-        <input ng-model="loginCtrl.password" type="text">
-      </md-input-container>
-      <md-input-container>
-        <label>Email</label>
-        <input ng-model="loginCtrl.email" type="text">
-      </md-input-container>
+        <md-content layout="row" flex layout-align="center center">
+          <md-button ng-click="showLogin = !showLogin" flex="45" class="md-raised md-primary">
+            Login
+          </md-button>
+          <md-button ng-click="showRegister = !showRegister" flex="45" class="md-raised md-primary">
+            Register
+          </md-button>
+        </md-content>
 
-      <md-button ng-click="loginCtrl.$users.signUp(loginCtrl.username, loginCtrl.password, loginCtrl.email)" ng-disabled="loginCtrl.$users.loading" class="md-raised md-primary">
-        Sign In
-      </md-button>
-    </md-card-content>
-  </md-card>
+        <md-content ng-show="showLogin">
+          <md-input-container>
+            <label>Username</label>
+            <input ng-model="loginCtrl.username" type="text">
+          </md-input-container>
+          <md-input-container>
+            <label>Password</label>
+            <input ng-model="loginCtrl.password" type="text">
+          </md-input-container>
+          <md-button ng-click="loginCtrl.$users.signIn(loginCtrl.username, loginCtrl.password)" ng-disabled="loginCtrl.$users.loading" class="md-raised md-primary">
+            Sign In
+          </md-button>
+        </md-content>
+
+        <md-content ng-show="showRegister">
+          <md-input-container>
+            <label>Username</label>
+            <input ng-model="loginCtrl.username" type="text">
+          </md-input-container>
+          <md-input-container>
+            <label>Password</label>
+            <input ng-model="loginCtrl.password" type="text">
+          </md-input-container>
+          <md-input-container>
+            <label>Email</label>
+            <input ng-model="loginCtrl.email" type="text">
+          </md-input-container>
+          <md-button ng-click="loginCtrl.$users.signUp(loginCtrl.username, loginCtrl.password, loginCtrl.email)" ng-disabled="loginCtrl.$users.loading" class="md-raised md-primary">
+            Register
+          </md-button>
+        </md-content>
+
+      </md-card-content>
+    </md-card>
+  </md-content>
+
 </md-content>

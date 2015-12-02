@@ -8,17 +8,20 @@ module.exports = function(app){
 
   app.get('/auth/twitter', passport.authenticate('twitter'));
   app.get('/auth/twitter/callback', passport.authenticate('twitter'), function(req, res){
-    res.redirect('/?username='+req.user.username);
+    req.session.username = req.user.username;
+    res.redirect('/?username='+req.user.username+'&image='+req.user.providerData.profile_image_url);
   });
 
   app.get('/auth/facebook/', passport.authenticate('facebook'));
   app.get('/auth/facebook/callback', passport.authenticate('facebook'), function(req, res){
+    req.session.username = req.user.username;
     res.redirect('/?username='+req.user.username);
   });
 
   app.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/plus.login'}));
   app.get('/auth/google/callback', passport.authenticate('google'), function(req, res){
-    res.redirect('/?username='+req.user.username);
+    req.session.username = req.user.username;
+    res.redirect('/?username='+req.user.username+'&image='+req.user.providerData.image.url);
   });
 
   app.post('/signup', users.signup);
