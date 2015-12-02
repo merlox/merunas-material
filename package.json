@@ -6,8 +6,7 @@
   "author": "Merunas grincalaitis",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "latest",
-    "cookie-parser": "^1.4.0",
+    "body-parser": "^1.14.1",
     "crypto": "0.0.3",
     "express": "latest",
     "express-session": "^1.12.1",

@@ -1,4 +1,4 @@
-app.controller('LoginCtrl', function($users, $state, $scope, $timeout){
+app.controller('LoginCtrl', function($users){
   var loginCtrl = this;
   loginCtrl.$users = $users;
 });

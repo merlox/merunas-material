@@ -4,14 +4,12 @@ var express = require('express'),
   path = require('path'),
   config = require('./config/config.js'),
   passport = require('passport'),
-  session = require('express-session'),
+  expressSession = require('express-session'),
   app = express();
 global.rootPath = path.resolve(__dirname);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(session({secret: 'merlox cat', cookie: {secure:false}, resave: true, saveUninitialized: false}));
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(expressSession({secret: 'merlox cat', resave: true, saveUninitialized: false}));
 mongoose.connect(config.dbUrl);
 var port = process.env.PORT || 8080;
 

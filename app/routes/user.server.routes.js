@@ -3,17 +3,23 @@ var users = require('../controllers/users.server.controller.js'),
   configPassport = require('../../config/passport.js')();
 
 module.exports = function(app){
-  
+  app.use(passport.initialize());
+  app.use(passport.session());
+
   app.get('/auth/twitter', passport.authenticate('twitter'));
-  app.get('/auth/twitter/callback', passport.authenticate('twitter', {successRedirect: '/', failureRedirect: '/signin'}));
+  app.get('/auth/twitter/callback', passport.authenticate('twitter'), function(req, res){
+    res.redirect('/?username='+req.user.username);
+  });
 
   app.get('/auth/facebook/', passport.authenticate('facebook'));
-  app.get('/auth/facebook/callback', passport.authenticate('facebook', {successRedirect: '/', failureRedirect: '/signin'}));
+  app.get('/auth/facebook/callback', passport.authenticate('facebook'), function(req, res){
+    res.redirect('/?username='+req.user.username);
+  });
 
-  app.get('/auth/google', passport.authenticate('google', {
-    scope: 'https://www.googleapis.com/auth/plus.login'
-  }));
-  app.get('/auth/google/callback', passport.authenticate('google', {successRedirect: '/', failureRedirect: '/signin'}));
+  app.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/plus.login'}));
+  app.get('/auth/google/callback', passport.authenticate('google'), function(req, res){
+    res.redirect('/?username='+req.user.username);
+  });
 
   app.post('/signup', users.signup);
 

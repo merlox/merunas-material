@@ -5,6 +5,7 @@ var app = angular.module('myApp',
   'ngFileUpload',
   'ngImgCrop',
   'ngSanitize',
+  'ngCookies',
 ]);
 
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
