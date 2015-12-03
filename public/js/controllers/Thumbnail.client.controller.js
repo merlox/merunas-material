@@ -1,5 +1,6 @@
 app.controller('ThumbnailCtrl', function($http, Upload, $timeout, $location, $anchorScroll){
   thumbnailCtrl = this;
+
   thumbnailCtrl.getThumbnails = function(){
     $http.get('/api/thumbnails').success(function(response){
       thumbnailCtrl.loading = false;

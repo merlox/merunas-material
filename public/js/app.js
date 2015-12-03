@@ -27,6 +27,14 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
     .state('signin', {
       url: '/signin',
       templateUrl: 'views/signin.html'
+    })
+    .state('admin', {
+      url: '/admin',
+      templateUrl: 'views/añadirArticulo.html'
+    })
+    .state('twitter', {
+      url: '/myTwitter',
+      templateUrl: 'views/twitter.html'
     });
 
   $urlRouterProvider.otherwise('/');

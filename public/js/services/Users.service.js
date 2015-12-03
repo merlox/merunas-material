@@ -20,6 +20,11 @@ app.factory('$users', function($http, $state, $location, $cookies){
       $cookies.put('userImage', urlImage, {expires: CookieDate.toGMTString()});
       $users.userImage = urlImage;
     }
+    if($cookies.get('username') === 'Merunas Grincalaitis' || $cookies.get('username') === 'Merlox' || $cookies.get('username') === 'Merlox Gr'){
+      $users.adminMode = true;
+    }else{
+      $users.adminMode = false;
+    }
   })();
 
   if($users.name){
@@ -76,6 +81,7 @@ app.factory('$users', function($http, $state, $location, $cookies){
       $users.name = '';
       $cookies.remove('username');
       $cookies.remove('userImage');
+      $users.adminMode = false;
     }).catch(function(response){
       console.log('Error', response);
     });

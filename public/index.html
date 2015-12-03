@@ -41,17 +41,27 @@
   </head>
   <body ng-controller="ThumbnailCtrl as thumbnailCtrl" layout="column" ng-cloak>
 
-    <md-toolbar  id="scrollTop" layout="row" layout-align="space-between center" class="md-primary md-hue-2">
+    <md-toolbar ng-controller="LoginCtrl as loginCtrl" id="scrollTop" layout="row" layout-align="space-between center" class="md-primary md-hue-2">
       <img src="../images/logo.svg" width="200" alt="The top ten web logo" />
       <div flex></div>
       <md-button ng-show="thumbnailCtrl.showArticle" ng-click="thumbnailCtrl.scrollToTop(); thumbnailCtrl.showArticle=false;" class="md-warn">
         Back
       </md-button>
-      <md-button class="md-raised md-primary" ui-sref="home">Inicio</md-button>
-      <md-button ng-if="thumbnailCtrl.adminMode" class="md-raised md-primary" ui-sref="form">Añadir articulo</md-button>
-      <md-button ng-show="!thumbnailCtrl.isSidebarHidden" ng-click="thumbnailCtrl.isSidebarHidden=!thumbnailCtrl.isSidebarHidden" class="md-raised md-primary">Hide sidebar</md-button>
-      <md-button ng-show="thumbnailCtrl.isSidebarHidden" ng-click="thumbnailCtrl.isSidebarHidden=!thumbnailCtrl.isSidebarHidden" class="md-raised md-accent">Show sidebar</md-button>
-      <div ng-controller="LoginCtrl as loginCtrl" layout="row" layout-align="center center">
+      <md-button class="md-raised md-primary" ui-sref="home">
+        Inicio</md-button>
+      <md-button ng-if="loginCtrl.$users.adminMode" ui-sref="admin" class="md-raised md-primary" ui-sref="form">
+        Añadir articulo</md-button>
+      <md-button ng-click="thumbnailCtrl.isSidebarHidden=true" ng-show="!thumbnailCtrl.isSidebarHidden" class="md-raised md-primary">
+        Hide sidebar</md-button>
+      <md-button ng-click="thumbnailCtrl.isSidebarHidden=false" ng-show="thumbnailCtrl.isSidebarHidden" class="md-raised md-primary">
+        Show sidebar</md-button>
+      <md-button ng-click="thumbnailCtrl.adminMode = true" ng-show="loginCtrl.$users.adminMode && !thumbnailCtrl.adminMode" class="md-raised md-primary">
+        Activate admin mode
+      </md-button>
+      <md-button ng-click="thumbnailCtrl.adminMode = false" ng-show="loginCtrl.$users.adminMode && thumbnailCtrl.adminMode" class="md-raised md-primary">
+        Desactivate admin mode
+      </md-button>
+      <div layout="row" layout-align="center center">
         <md-button ng-show="!loginCtrl.$users.loggedIn" ng-disabled="loginCtrl.$users.loading" ui-sref="signin" class="md-raised md-primary">Sign In</md-button>
         <md-button ng-show="loginCtrl.$users.name || loginCtrl.$users.loggedIn" ng-click="loginCtrl.$users.signOut()" ng-disabled="loginCtrl.$users.loading" class="md-raised md-primary">Sign Out</md-button>
         <md-button ng-show="loginCtrl.$users.name || loginCtrl.$users.loggedIn" class="md-primary">
