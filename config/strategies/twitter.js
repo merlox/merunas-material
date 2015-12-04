@@ -7,7 +7,7 @@ module.exports = function(){
   passport.use(new TwitterStrategy({
     consumerKey: config.twitter.consumerKey,
     consumerSecret: config.twitter.consumerSecret,
-    callbackURL: config.twitter.callbackUrl,
+    callbackURL: config.twitter.callbackURL,
   },
   function(token, tokenSecret, profile, done){
     User.findOrCreate({

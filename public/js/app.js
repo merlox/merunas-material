@@ -29,12 +29,12 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
       templateUrl: 'views/signin.html'
     })
     .state('admin', {
-      url: '/admin',
+      url: '/admin/add',
       templateUrl: 'views/añadirArticulo.html'
     })
-    .state('twitter', {
-      url: '/myTwitter',
-      templateUrl: 'views/twitter.html'
+    .state('article', {
+      url: '/article/:id',
+      templateUrl: 'views/article.html'
     });
 
   $urlRouterProvider.otherwise('/');

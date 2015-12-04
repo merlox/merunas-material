@@ -1,5 +1,4 @@
 var mongoose = require('mongoose'),
-  random = require('mongoose-simple-random'),
   Schema = mongoose.Schema;
 var ThumbnailSchema = new Schema({
   thumbnailTitle: {
@@ -26,11 +25,16 @@ var ThumbnailSchema = new Schema({
     type: String,
     required: 'Article body required'
   },
+  random: {
+    type: [Number],
+    default: function(){
+      return [Math.random(), Math.random()]
+    },
+    index: '2d'
+  },
   createdAt: {
     type: Date,
     default: Date.now
   }
 });
-//Use random selector module
-ThumbnailSchema.plugin(random);
 module.exports = mongoose.model('Thumbnail', ThumbnailSchema);

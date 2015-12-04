@@ -12,14 +12,6 @@
     <link rel="stylesheet" href="bower_components/ng-img-crop/compile/minified/ng-img-crop.css">
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/main.css">
-    <style type="text/css">
-      /**
-       * Hide when Angular is not yet loaded and initialized
-       */
-      [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-        display: none !important;
-      }
-    </style>
 
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/angular/angular.js" charset="utf-8"></script>
@@ -71,6 +63,7 @@
       </div>
     </md-toolbar>
     <md-progress-linear ng-show="loginCtrl.$users.loading" md-mode="indeterminate"></md-progress-linear>
+
 
 
     <ui-view></ui-view>

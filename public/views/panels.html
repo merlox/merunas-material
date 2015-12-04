@@ -43,23 +43,9 @@
         </md-card-content>
         <md-divider></md-divider>
         <md-card-footer layout="row" layout-align="center">
-          <md-button ng-click="thumbnailCtrl.showArticle=true; thumbnailCtrl.scrollToTop(); thumbnailCtrl.value=thumbnailCtrl.selectIndex($index);" class="md-flat md-accent">
-            Leer artículo</md-button>
+          <md-button ng-click="thumbnailCtrl.showArticle=true; thumbnailCtrl.scrollToTop(); thumbnailCtrl.selectIndex($index);" ng-href="/article/{{$index}}" class="md-flat md-accent">
+            Más Detalles</md-button>
         </md-card-footer>
-      </md-card>
-
- <!--article-->
-      <md-card layout-align="center center" ng-show="thumbnailCtrl.showArticle" class="md-whiteframe-z2" flex>
-        <md-toolbar layout-align="center center">
-          <div ng-bind-html="thumbnailCtrl.value.articleTitle"></div>
-        </md-toolbar>
-        <div>
-          <small>by <b>merlox</b>
-            {{thumbnailCtrl.value.createdAt | date}}
-          </small>
-        </div>
-        <md-divider></md-divider>
-        <div style="padding:10px 50px;" ng-bind-html="thumbnailCtrl.value.articleBody"></div>
       </md-card>
 
  <!--paginator-->

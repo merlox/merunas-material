@@ -32,7 +32,7 @@ exports.searchThumbnails = function(req, res){
 };
 
 exports.random = function(req, res){
-  Thumbnail.findRandom({}, {thumbnailTitle: 1}, {limit: 20}, function(err, results){
+  Thumbnail.find({random: {$near:[Math.random(), Math.random()]}}).select({thumbnailTitle: 1}).limit(20).exec(function(err, results){
     if(err) return res.send(err);
     res.json({
       message: 'found successfully',
