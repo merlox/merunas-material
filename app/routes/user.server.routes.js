@@ -18,7 +18,9 @@ module.exports = function(app){
     res.redirect('/?username='+req.user.username);
   });
 
-  app.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/plus.login'}));
+  app.get('/auth/google', passport.authenticate('google', {
+    scope: ['https://www.googleapis.com/auth/plus.login']
+  }));
   app.get('/auth/google/callback', passport.authenticate('google'), function(req, res){
     req.session.username = req.user.username;
     res.redirect('/?username='+req.user.username+'&image='+req.user.providerData.image.url);

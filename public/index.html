@@ -36,11 +36,10 @@
     <md-toolbar ng-controller="LoginCtrl as loginCtrl" id="scrollTop" layout="row" layout-align="space-between center" class="md-primary md-hue-2">
       <img src="../images/logo.svg" width="200" alt="The top ten web logo" />
       <div flex></div>
-      <md-button ng-show="thumbnailCtrl.showArticle" ng-click="thumbnailCtrl.scrollToTop(); thumbnailCtrl.showArticle=false;" class="md-warn">
-        Back
+
+      <md-button ng-click="thumbnailCtrl.scrollToTop();" ui-sref="home" class="md-raised md-primary">
+        Inicio
       </md-button>
-      <md-button class="md-raised md-primary" ui-sref="home">
-        Inicio</md-button>
       <md-button ng-if="loginCtrl.$users.adminMode" ui-sref="admin" class="md-raised md-primary" ui-sref="form">
         Añadir articulo</md-button>
       <md-button ng-click="thumbnailCtrl.isSidebarHidden=true" ng-show="!thumbnailCtrl.isSidebarHidden" class="md-raised md-primary">

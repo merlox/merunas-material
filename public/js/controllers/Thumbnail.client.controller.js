@@ -1,24 +1,22 @@
-app.controller('ThumbnailCtrl', function($http, Upload, $timeout, $location, $anchorScroll){
+app.controller('ThumbnailCtrl', function($http, Upload, $timeout, $location, $anchorScroll, $stateParams){
   thumbnailCtrl = this;
 
   thumbnailCtrl.getThumbnails = function(){
+    thumbnailCtrl.loading=true;
     $http.get('/api/thumbnails').success(function(response){
-      thumbnailCtrl.loading = false;
       thumbnailCtrl.thumbnailData = response.thumbnailsFound;
       thumbnailCtrl.actualPage = response.actualPage;
-      //Paginator calculation
-      var totalPages = Math.ceil(response.totalPages/18);
-      var range = [];
-      for (var i = 1; i <= totalPages; i++) {
-        range.push(i);
-      }
-      thumbnailCtrl.pagesArray = range;
+      articleLoader();
+      paginatorCalculator(response);
+      getLastPosts();
+      thumbnailCtrl.loading = false;
     }).catch(function(response){
       thumbnailCtrl.loading = false;
       thumbnailCtrl.responseError = response;
     });
   };
   thumbnailCtrl.postThumbnail = function(myFile){
+    thumbnailCtrl.loading=true;
     if(myFile){
       Upload.upload({
         url: '/api/thumbnails',
@@ -54,7 +52,7 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout, $location, $an
       thumbnailTitle: editTitle,
       thumbnailBody: editBody
     }).success(function(response){
-      thumbnailCtrl.getLastPosts();
+      getLastPosts();
       thumbnailCtrl.getThumbnails();
     }).catch(function(response){
       console.log(response);
@@ -71,14 +69,17 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout, $location, $an
     });
   };
   thumbnailCtrl.selectIndex = function(index){
+    thumbnailCtrl.loading = true;
     for (var i = 0; i < thumbnailCtrl.thumbnailData.length; i++) {
       if(thumbnailCtrl.thumbnailData[i] == thumbnailCtrl.thumbnailData[index]){
-        thumbnailCtrl.value=thumbnailCtrl.thumbnailData[i];
+        thumbnailCtrl.articleFound = thumbnailCtrl.thumbnailData[i];
+        thumbnailCtrl.loading = false;
         return thumbnailCtrl.thumbnailData[i];
       }
     }
   };
   thumbnailCtrl.getThumbnailsLimit = function(limitQuery, pageQuery){
+    thumbnailCtrl.loading=true;
     if(pageQuery){
       $http.get('/api/thumbnails/search?limit='+limitQuery+'&page='+pageQuery).success(function(response){
         thumbnailCtrl.loading = false;
@@ -95,23 +96,32 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout, $location, $an
       });
     }
   };
-  thumbnailCtrl.getLastPosts = function(){
+
+  thumbnailCtrl.scrollToTop = function(){
+    $location.hash('scrollTop');
+    $anchorScroll();
+  };
+  function paginatorCalculator(response){
+    //Paginator calculation
+    var totalPages = Math.ceil(response.totalPages/18);
+    var range = [];
+    for (var i = 1; i <= totalPages; i++) {
+      range.push(i);
+    }
+    thumbnailCtrl.pagesArray = range;
+  }
+  function articleLoader(){
+    if(Object.keys($stateParams).length != 0){
+      //the id object is defined in the routes app.js
+      thumbnailCtrl.selectIndex($stateParams.id);
+    }
+  }
+  function getLastPosts(){
     $http.get('/api/thumbnails?lastPosts=10').success(function(response){
       thumbnailCtrl.loading = false;
       thumbnailCtrl.lastPosts = response.thumbnailsFound;
     }).catch(function(response){
       console.log('error'+response.error);
     });
-  };
-  thumbnailCtrl.getRandomPostsTitles = function(){
-    $http.get('/api/thumbnails/randomPosts').success(function(response){
-      thumbnailCtrl.randomTitles = response.randomTitlesFound;
-    }).catch(function(response){
-      console.log('error', response.error);
-    });
-  };
-  thumbnailCtrl.scrollToTop = function(){
-    $location.hash('scrollTop');
-    $anchorScroll();
   };
 });

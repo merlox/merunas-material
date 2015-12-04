@@ -3,11 +3,9 @@ var config = {};
 config.dbUrl = process.env.DB_URL || 'mongodb://merlox:merlox@apollo.modulusmongo.net:27017/opu8Wihe';
 
 config.twitter = {
-  consumerKey: '2MB0L5m4QNIeoH7leBroJP7lW',
-  consumerSecret: 'XpL9qgKazNcnTBaAEJHP43E2RxLzhTIYoMfpFnVQfMiteoPNRO',
-  callbackURL: 'http://127.0.0.1:8080/auth/twitter/callback',
-  accessKey: '372742883-YiD1bi93GDV2Y5i3vbyleISWbcI7d0bgrhSs17vv',
-  accessSecret: 'goMAvvjjFHQ0DVPmGMB4NN38LkvBdZECKQr2RbcVJW2CP'
+  consumerKey: 'HaEMSO2ikvLGHPrRu1nnGrKuZ',
+  consumerSecret: 'HpqPefzGLk0mqnRtV0JR5D2jo3HwNTo9hmJ1cwxKGvDYy6xX7u',
+  callbackURL: 'http://localhost:8080/auth/twitter/callback'
 };
 config.facebook = {
   clientID: '437021553162621',
@@ -15,9 +13,9 @@ config.facebook = {
   callbackURL: 'http://localhost:8080/auth/facebook/callback'
 };
 config.google = {
-  clientID: '789410314493-gjm8h99iasechullst5ieqv475qiihgd.apps.googleusercontent.com0',
-  clientSecret: 'w2i9uG3wjoGXqMwH9A_aovdo',
-  callbackURL: 'http://localhost:8080/auth/google/callack'
+  clientID: '1093128908224-a07n7b1vjmsch875vjv64pds3qk8eqep.apps.googleusercontent.com',
+  clientSecret: 'X3C2MU2fozu-tLlDvE10DyND',
+  callbackURL: 'http://localhost:8080/auth/google/callback'
 };
 
 module.exports = config;

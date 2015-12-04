@@ -1,0 +1,36 @@
+<!--random posts-->
+  <md-card layout="column">
+    <md-toolbar layout-align="center center">
+      Random posts
+    </md-toolbar>
+    <md-list layout="column" layout-align="space-around" style="padding:0;">
+      <md-list-item ng-repeat="data in thumbnailCtrl.randomTitles">
+        {{data.thumbnailTitle}}
+        <md-divider></md-divider>
+      </md-list-item>
+    </md-list>
+  </md-card>
+
+  function getRandomPostsTitles(){
+    $http.get('/api/thumbnails/randomPosts').success(function(response){
+      thumbnailCtrl.randomTitles = response.randomTitlesFound;
+    }).catch(function(response){
+      console.log('error', response.error);
+    });
+  };
+
+SERVER
+
+  1.Route
+  app.get('/api/thumbnails/randomPosts', thumbnailCtrl.random);
+
+  2.Controller
+  exports.random = function(req, res){
+    Thumbnail.find({random: {$near:[Math.random(), Math.random()]}}).select({thumbnailTitle: 1}).limit(20).exec(function(err, results){
+      if(err) return res.send(err);
+      res.json({
+        message: 'found successfully',
+        randomTitlesFound: results,
+      });
+    });
+  };

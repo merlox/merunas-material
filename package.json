@@ -1,12 +1,13 @@
 {
-  "name": "express-learning-exercice",
+  "name": "the-top-ten-web-material",
   "version": "1.0.0",
-  "description": "Learning express database integration and initial setup",
+  "description": "Top ten products on the internet",
   "main": "server.js",
   "author": "Merunas grincalaitis",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.14.1",
+    "cookie-parser": "^1.4.0",
     "crypto": "0.0.3",
     "express": "latest",
     "express-session": "^1.12.1",
@@ -14,10 +15,9 @@
     "mongoose-findorcreate": "^0.1.2",
     "multer": "^1.1.0",
     "passport": "^0.3.2",
+    "passport-facebook": "latest",
     "passport-google-oauth": "^0.2.0",
     "passport-local": "^1.0.0",
-    "passport-twitter": "^1.0.3",
-    "paypal-rest-sdk": "^1.6.6",
-    "twitter": "^1.2.5"
+    "passport-twitter": "^1.0.3"
   }
 }

@@ -34,7 +34,10 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
     })
     .state('article', {
       url: '/article/:id',
-      templateUrl: 'views/article.html'
+      templateUrl: 'views/article.html',
+      onEnter: function(){
+        thumbnailCtrl.getThumbnails();
+      }
     });
 
   $urlRouterProvider.otherwise('/');

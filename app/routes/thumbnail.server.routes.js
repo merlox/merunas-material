@@ -4,8 +4,6 @@ module.exports = function(app){
 
   app.get('/api/thumbnails/search', thumbnailCtrl.searchThumbnails);
 
-  app.get('/api/thumbnails/randomPosts', thumbnailCtrl.random);
-
   app.route('/api/thumbnails/:title?')
     .get(thumbnailCtrl.getThumbnails)
     .post(thumbnailCtrl.postThumbnail)
