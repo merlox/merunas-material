@@ -10,14 +10,26 @@ module.exports = function(){
     callbackURL: config.facebook.callbackURL,
   },
   function(token, tokenSecret, profile, done){
-    User.findOrCreate({
+    User.findOne({
       username: profile.displayName,
-      provider: 'facebook',
-      providerId: profile.id,
-      providerData: profile._json
     }, function(err, userFound){
+      if(userFound){
+        console.log('user found');
+      }
       if(err) return done(err);
-      done(null, userFound);
+      if(!userFound){
+        var user = new User();
+        user.username = profile.displayName;
+        user.provider = 'facebook';
+        user.providerId = profile.id;
+        user.providerData = profile._json;
+        user.save(function(err){
+          if(err) return done(err);
+          return done(null, user);
+        });
+      }else{
+        return done(null, userFound);
+      }
     });
   }));
 };

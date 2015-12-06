@@ -1,6 +1,5 @@
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema,
-  findOrCreate = require('mongoose-findorcreate'),
   crypto = require('crypto'),
   UserSchema = new Schema({
   email: {
@@ -8,6 +7,7 @@ var mongoose = require('mongoose'),
   },
   username: {
     type: String,
+    unique: true,
     required: 'Your name'
   },
   password: {
@@ -23,14 +23,12 @@ var mongoose = require('mongoose'),
   },
   providerId: String,
   providerData: {},
+  direccionEnvio: {},
   createdAt: {
     type: Date,
     default: Date.now
   }
 });
-
-UserSchema.plugin(findOrCreate);
-
 UserSchema.pre('save', function(next){
   if(this.password){
     this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');

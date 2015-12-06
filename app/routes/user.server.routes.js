@@ -7,33 +7,49 @@ module.exports = function(app){
   app.use(passport.session());
 
   app.get('/auth/twitter', function(req, res, next){
-    req.session.isComprarQuery = req.query.comprar;
-    req.session.comprarCallbackUrl = req.headers.referer;
+    if(req.headers.referer == 'http://localhost:8080/signin'){
+      req.session.comprarCallbackUrl = '';
+    }else{
+      req.session.comprarCallbackUrl = req.headers.referer;
+    }
     next();
   }, passport.authenticate('twitter'));
   app.get('/auth/twitter/callback', passport.authenticate('twitter'), function(req, res){
     req.session.username = req.user.username;
     req.session.userImage = req.user.providerData.profile_image_url;
-    if(req.session.isComprarQuery){
-      res.redirect(req.session.comprarCallbackUrl);
-    }else{
-      res.redirect('/');
-    }
+    res.redirect(req.session.comprarCallbackUrl || '/');
   });
 
-  app.get('/auth/facebook/', passport.authenticate('facebook'));
+  app.get('/auth/facebook', function(req, res, next){
+    if(req.headers.referer == 'http://localhost:8080/signin'){
+      req.session.comprarCallbackUrl = '';
+    }else{
+      req.session.comprarCallbackUrl = req.headers.referer;
+    }
+    next();
+  }, passport.authenticate('facebook'));
   app.get('/auth/facebook/callback', passport.authenticate('facebook'), function(req, res){
     req.session.username = req.user.username;
-    res.redirect('/?username='+req.user.username);
+    req.session.userImage = req.user.providerData.profile_image_url;
+    res.redirect(req.session.comprarCallbackUrl || '/');
   });
 
-  app.get('/auth/google', passport.authenticate('google', {
+  app.get('/auth/google', function(req, res, next){
+    if(req.headers.referer == 'http://localhost:8080/signin'){
+      req.session.comprarCallbackUrl = '';
+    }else{
+      req.session.comprarCallbackUrl = req.headers.referer;
+    }
+    next();
+  }, passport.authenticate('google', {
     scope: ['https://www.googleapis.com/auth/plus.login']
   }));
   app.get('/auth/google/callback', passport.authenticate('google'), function(req, res){
     req.session.username = req.user.username;
-    res.redirect('/?username='+req.user.username+'&image='+req.user.providerData.image.url);
+    req.session.userImage = req.user.providerData.image.url;
+    res.redirect(req.session.comprarCallbackUrl || '/');
   });
+
 
   app.post('/signup', users.signup);
 

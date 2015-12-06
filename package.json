@@ -13,7 +13,6 @@
     "express": "latest",
     "express-session": "^1.12.1",
     "mongoose": "latest",
-    "mongoose-findorcreate": "^0.1.2",
     "multer": "^1.1.0",
     "passport": "^0.3.2",
     "passport-facebook": "latest",

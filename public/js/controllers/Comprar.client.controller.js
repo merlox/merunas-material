@@ -1,14 +1,25 @@
-app.controller('ComprarCtrl', function($interval, $users){
+app.controller('ComprarCtrl', function($interval, $users, $cookies, $timeout){
   var comprarCtrl = this;
+  comprarCtrl.$users = $users;
+
+  (function checkCookies(){
+    $timeout(function(){
+      if($users.name || $cookies.get('username')){
+        comprarCtrl.showLogin = false;
+        comprarCtrl.showEnvio = true;
+        comprarCtrl.showEnvioLogged = true;
+      }
+    }, 1000);
+  })();
 
   comprarCtrl.twitter = function(){
-    window.location = '/auth/twitter?comprar=true';
+    window.location = '/auth/twitter';
   };
   comprarCtrl.facebook = function(){
-    window.location ="/auth/facebook/comprar";
+    window.location ="/auth/facebook";
   };
   comprarCtrl.google = function(){
-    window.location = "/auth/google/comprar";
+    window.location = "/auth/google";
   };
   comprarCtrl.signIn = function(myUsername, myPassword){
     $users.loading = true;
