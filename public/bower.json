@@ -27,6 +27,7 @@
     "angular": "~1.4.7",
     "jquery": "~2.1.4",
     "ng-file-upload": "~10.0.2",
-    "angular-cookies": "~1.4.8"
+    "angular-cookies": "~1.4.8",
+    "owl.carousel": "owl-carousel2#~2.0.0-beta.3"
   }
 }

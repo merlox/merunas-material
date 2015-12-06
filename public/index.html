@@ -10,10 +10,13 @@
     <link rel='stylesheet' href='css/google-fonts.css'>
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
     <link rel="stylesheet" href="bower_components/ng-img-crop/compile/minified/ng-img-crop.css">
+    <link rel="stylesheet" href="bower_components/owl.carousel/dist/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="bower_components/owl.carousel/dist/assets/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/main.css">
 
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/owl.carousel/dist/owl.carousel.min.js" charset="utf-8"></script>
     <script src="bower_components/angular/angular.js" charset="utf-8"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js" charset="utf-8"></script>
     <script src="bower_components/angular-animate/angular-animate.min.js"></script>
@@ -29,43 +32,18 @@
     <script src="js/directives/adminPowers.directive.js"></script>
     <script src="js/controllers/Thumbnail.client.controller.js"></script>
     <script src="js/controllers/Login.client.controller.js"></script>
+    <script src="js/controllers/Comprar.client.controller.js"></script>
     <script src="js/services/Users.service.js"></script>
   </head>
   <body ng-controller="ThumbnailCtrl as thumbnailCtrl" layout="column" ng-cloak>
 
-    <md-toolbar ng-controller="LoginCtrl as loginCtrl" id="scrollTop" layout="row" layout-align="space-between center" class="md-primary md-hue-2">
-      <img src="../images/logo.svg" width="200" alt="The top ten web logo" />
-      <div flex></div>
+    <div ui-view="mainToolbar"></div>
 
-      <md-button ng-click="thumbnailCtrl.scrollToTop();" ui-sref="home" class="md-raised md-primary">
-        Inicio
-      </md-button>
-      <md-button ng-if="loginCtrl.$users.adminMode" ui-sref="admin" class="md-raised md-primary" ui-sref="form">
-        Añadir articulo</md-button>
-      <md-button ng-click="thumbnailCtrl.isSidebarHidden=true" ng-show="!thumbnailCtrl.isSidebarHidden" class="md-raised md-primary">
-        Hide sidebar</md-button>
-      <md-button ng-click="thumbnailCtrl.isSidebarHidden=false" ng-show="thumbnailCtrl.isSidebarHidden" class="md-raised md-primary">
-        Show sidebar</md-button>
-      <md-button ng-click="thumbnailCtrl.adminMode = true" ng-show="loginCtrl.$users.adminMode && !thumbnailCtrl.adminMode" class="md-raised md-primary">
-        Activate admin mode
-      </md-button>
-      <md-button ng-click="thumbnailCtrl.adminMode = false" ng-show="loginCtrl.$users.adminMode && thumbnailCtrl.adminMode" class="md-raised md-primary">
-        Desactivate admin mode
-      </md-button>
-      <div layout="row" layout-align="center center">
-        <md-button ng-show="!loginCtrl.$users.loggedIn" ng-disabled="loginCtrl.$users.loading" ui-sref="signin" class="md-raised md-primary">Sign In</md-button>
-        <md-button ng-show="loginCtrl.$users.name || loginCtrl.$users.loggedIn" ng-click="loginCtrl.$users.signOut()" ng-disabled="loginCtrl.$users.loading" class="md-raised md-primary">Sign Out</md-button>
-        <md-button ng-show="loginCtrl.$users.name || loginCtrl.$users.loggedIn" class="md-primary">
-          <span style="float:left; margin-top:6px;">Logged as: {{loginCtrl.$users.name}}</span>
-          <img ng-src="{{loginCtrl.$users.userImage}}" style="margin-left:5px; float:right;" alt=""/>
-        </md-button>
-      </div>
-    </md-toolbar>
-    <md-progress-linear ng-show="loginCtrl.$users.loading" md-mode="indeterminate"></md-progress-linear>
+    <div ui-view="body"></div>
 
-
-
-    <ui-view></ui-view>
-
+    <div layout="row" layout-align="center start" flex>
+      <div ui-view flex="{{thumbnailCtrl.expandFlex ? 100 : 75}}"></div>
+      <div ui-view="sidebar" flex="25" ng-if="!thumbnailCtrl.isSidebarHidden"></div>
+    </div>
   </body>
 </html>

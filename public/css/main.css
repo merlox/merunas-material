@@ -13,3 +13,28 @@ md-card-footer *{
   background-color: rgba(0, 0, 0, 0.05);
   height: 300px;
 }
+.dont-break-out {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+.item{
+  height: 400px;
+  max-width: 700px;
+  display: block;
+  margin: auto;
+}
+.button-default{
+  width:350px;
+}
+.button-align{
+  display:block;
+  margin:auto;
+  margin-bottom: 7px;
+}

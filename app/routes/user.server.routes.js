@@ -6,10 +6,19 @@ module.exports = function(app){
   app.use(passport.initialize());
   app.use(passport.session());
 
-  app.get('/auth/twitter', passport.authenticate('twitter'));
+  app.get('/auth/twitter', function(req, res, next){
+    req.session.isComprarQuery = req.query.comprar;
+    req.session.comprarCallbackUrl = req.headers.referer;
+    next();
+  }, passport.authenticate('twitter'));
   app.get('/auth/twitter/callback', passport.authenticate('twitter'), function(req, res){
     req.session.username = req.user.username;
-    res.redirect('/?username='+req.user.username+'&image='+req.user.providerData.profile_image_url);
+    req.session.userImage = req.user.providerData.profile_image_url;
+    if(req.session.isComprarQuery){
+      res.redirect(req.session.comprarCallbackUrl);
+    }else{
+      res.redirect('/');
+    }
   });
 
   app.get('/auth/facebook/', passport.authenticate('facebook'));

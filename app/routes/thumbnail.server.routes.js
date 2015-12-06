@@ -9,4 +9,6 @@ module.exports = function(app){
     .post(thumbnailCtrl.postThumbnail)
     .delete(thumbnailCtrl.deleteThumbnail)
     .put(thumbnailCtrl.editThumbnail);
+
+  app.put('/api/article/:title', thumbnailCtrl.editArticle);
 };

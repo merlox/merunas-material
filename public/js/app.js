@@ -12,31 +12,80 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
   $locationProvider.html5Mode(true);
 
   $stateProvider
-    .state('show', {
-      url: '/users',
-      templateUrl: 'views/showUsers.html'
-    })
-    .state('form', {
-      url: '/form',
-      templateUrl: 'views/añadirArticulo.html',
-    })
     .state('home', {
       url: '/',
-      templateUrl: 'views/panels.html'
+      views: {
+        'mainToolbar': {
+          templateUrl: 'views/mainToolbar.html'
+        },
+        '': {
+          templateUrl: 'views/thumbnails.html'
+        },
+        'sidebar': {
+          templateUrl: 'views/sidebar.html'
+        }
+      },
+      onEnter: function(){
+        thumbnailCtrl.isSidebarHidden = false;
+      }
     })
     .state('signin', {
       url: '/signin',
-      templateUrl: 'views/signin.html'
+      views: {
+        'mainToolbar': {
+          templateUrl: 'views/mainToolbar.html'
+        },
+        '': {
+          templateUrl: 'views/signin.html'
+        }
+      }
     })
     .state('admin', {
       url: '/admin/add',
-      templateUrl: 'views/añadirArticulo.html'
+      views: {
+        'mainToolbar': {
+          templateUrl: 'views/mainToolbar.html'
+        },
+        '': {
+          templateUrl: 'views/añadirArticulo.html'
+        }
+      },
+      onEnter: function(){
+        thumbnailCtrl.isSidebarHidden = true;
+        thumbnailCtrl.expandFlex = true;
+      },
+      onExit: function(){
+        thumbnailCtrl.isSidebarHidden = false;
+        thumbnailCtrl.expandFlex = false;
+      }
     })
     .state('article', {
-      url: '/article/:id',
-      templateUrl: 'views/article.html',
+      url: '/article?id',
+      views: {
+        'mainToolbar': {
+          templateUrl: 'views/mainToolbar.html'
+        },
+        '': {
+          templateUrl: 'views/article.html'
+        },
+        'sidebar': {
+          templateUrl: 'views/sidebar.html'
+        }
+      },
       onEnter: function(){
         thumbnailCtrl.getThumbnails();
+      }
+    })
+    .state('comprar', {
+      url: '/comprar?id',
+      reloadOnSearch: false,
+      views: {
+        'mainToolbar': {
+          templateUrl: 'views/mainToolbar.html'
+        },
+        '': {
+          templateUrl:'views/comprar.html'
+        }
       }
     });
 

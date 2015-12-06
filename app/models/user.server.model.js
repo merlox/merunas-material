@@ -8,7 +8,6 @@ var mongoose = require('mongoose'),
   },
   username: {
     type: String,
-    unique: true,
     required: 'Your name'
   },
   password: {

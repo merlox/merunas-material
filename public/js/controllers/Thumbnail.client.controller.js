@@ -1,4 +1,4 @@
-app.controller('ThumbnailCtrl', function($http, Upload, $timeout, $location, $anchorScroll, $stateParams){
+app.controller('ThumbnailCtrl', function($http, Upload, $timeout, $location, $anchorScroll, $stateParams, $cookies){
   thumbnailCtrl = this;
 
   thumbnailCtrl.getThumbnails = function(){
@@ -52,7 +52,6 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout, $location, $an
       thumbnailTitle: editTitle,
       thumbnailBody: editBody
     }).success(function(response){
-      getLastPosts();
       thumbnailCtrl.getThumbnails();
     }).catch(function(response){
       console.log(response);
@@ -78,6 +77,20 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout, $location, $an
       }
     }
   };
+  thumbnailCtrl.editArticle = function(editedTitle, editedBody){
+    thumbnailCtrl.loading = true;
+    var myTitle = thumbnailCtrl.thumbnailData[$stateParams.id].thumbnailTitle;
+    $http.put('/api/article/'+myTitle, {
+      articleTitle: editedTitle,
+      articleBody: editedBody
+    }).success(function(response){
+      console.log(response)
+      thumbnailCtrl.getThumbnails();
+      thumbnailCtrl.loading = false;
+    }).catch(function(error){
+      console.log(error)
+    });
+  };
   thumbnailCtrl.getThumbnailsLimit = function(limitQuery, pageQuery){
     thumbnailCtrl.loading=true;
     if(pageQuery){
@@ -96,11 +109,20 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout, $location, $an
       });
     }
   };
-
   thumbnailCtrl.scrollToTop = function(){
     $location.hash('scrollTop');
     $anchorScroll();
   };
+  thumbnailCtrl.currentParamsId = function(){
+    return $stateParams.id;
+  };
+  thumbnailCtrl.isLogged = function(){
+    if($cookies.get('username')){
+      return true;
+    }else{
+      return false;
+    }
+  }
   function paginatorCalculator(response){
     //Paginator calculation
     var totalPages = Math.ceil(response.totalPages/18);
@@ -115,7 +137,14 @@ app.controller('ThumbnailCtrl', function($http, Upload, $timeout, $location, $an
       //the id object is defined in the routes app.js
       thumbnailCtrl.selectIndex($stateParams.id);
     }
-  }
+    $('.owl-carousel').owlCarousel({
+      items: 1,
+      nav: true,
+      dots: false,
+      autoplay: true,
+      loop: true
+    });
+  };
   function getLastPosts(){
     $http.get('/api/thumbnails?lastPosts=10').success(function(response){
       thumbnailCtrl.loading = false;

@@ -9,6 +9,9 @@ module.exports = function(app, express){
       res.redirect('/');
     }
   });
+  app.get('/api/cookie', function(req, res){
+    return res.send(req.session);
+  });
 
   require('../routes/thumbnail.server.routes.js')(app);
   require('../routes/user.server.routes.js')(app);

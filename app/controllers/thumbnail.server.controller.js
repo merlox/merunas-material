@@ -30,6 +30,7 @@ exports.searchThumbnails = function(req, res){
     });
   });
 };
+
 exports.getThumbnails = function(req, res){
   if(req.query.lastPosts){
     require('../controllers/lastPosts.server.controller.js')(req, res);
@@ -108,14 +109,12 @@ exports.editThumbnail = function(req, res){
   if(req.session.username === 'Merunas Grincalaitis' || req.session.username === 'Merlox' || req.session.username === 'Merlox Gr'){
     Thumbnail.findOne({thumbnailTitle: req.params.title}, function(err, thumbnailFound){
       if(err) return res.send('Error'+err);
-      console.log('params',req.params.title);
       if(req.body.thumbnailTitle && req.body.thumbnailTitle != undefined){
         thumbnailFound.thumbnailTitle = req.body.thumbnailTitle;
       }
       if(req.body.thumbnailBody && req.body.thumbnailBody != undefined){
         thumbnailFound.thumbnailBody = req.body.thumbnailBody;
       }
-      console.log('body',req.body.thumbnailBody);
       thumbnailFound.save(function(err){
         if(err) return res.send('Error'+err);
         console.log('updated: '+thumbnailFound.title);
@@ -126,3 +125,26 @@ exports.editThumbnail = function(req, res){
     });
   }
 };
+
+exports.editArticle = function(req, res){
+  if(req.session.username === 'Merunas Grincalaitis' || req.session.username === 'Merlox' || req.session.username === 'Merlox Gr'){
+    Thumbnail.findOne({thumbnailTitle: req.params.title}, function(err, thumbnailFound){
+      if(err) return res.send('Error'+err);
+      if(req.body.articleTitle && req.body.articleTitle != undefined){
+        thumbnailFound.articleTitle = req.body.articleTitle;
+      }
+      if(req.body.articleBody && req.body.articleBody != undefined){
+        thumbnailFound.articleBody = req.body.articleBody;
+      }
+      thumbnailFound.save(function(err){
+        if(err) return res.send('Error'+err);
+        return res.json({
+          message:'updated'
+        });
+      });
+    });
+  }else{
+    console.log('Not authorized, you must be admin to do that');
+    return res.send('Not authorized, you must be admin to do that');
+  }
+}

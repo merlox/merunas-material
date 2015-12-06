@@ -2,23 +2,38 @@ app.factory('$users', function($http, $state, $location, $cookies){
   var $users = {};
 
   (function setCookie(){
-    var CookieDate = new Date;
-    var urlUsername = ($location.search()).username;
-    var urlImage = ($location.search()).image;
-    CookieDate.setFullYear(CookieDate.getFullYear()+1);
+    $http.get('/api/cookie').success(function(response){
+      if (response.username) {
+        $cookies.put('username', response.username, {maxAge: 31104000000}); //expires 1 year
+        $users.name = $cookies.get('username');
+        $users.loggedIn = true;
+        if($cookies.get('username') === 'Merunas Grincalaitis' || $cookies.get('username') === 'Merlox' || $cookies.get('username') === 'Merlox Gr'){
+          $users.adminMode = true;
+        }else{
+          $users.adminMode = false;
+        }
+      }else{
+        $cookies.remove('username');
+        $users.loggedIn = false;
+        $users.adminMode = false;
+      }
+      if(response.userImage){
+        $cookies.put('userImage', response.userImage, {maxAge: 31104000000});
+        $users.userImage = $cookies.get('userImage');
+      }else{
+        $cookies.remove('userImage');
+      }
+    }).catch(function(error){
+      console.log(error);
+    });
     if($cookies.get('username')){
       $users.name = $cookies.get('username');
+      $users.loggedIn = true;
+    }else{
+      $users.loggedIn = false;
     }
     if($cookies.get('userImage')){
       $users.userImage = $cookies.get('userImage');
-    }
-    if (urlUsername) {
-      $cookies.put('username', urlUsername, {expires: CookieDate.toGMTString()}); //expires 1 year
-      $users.name = urlUsername;
-    }
-    if(urlImage){
-      $cookies.put('userImage', urlImage, {expires: CookieDate.toGMTString()});
-      $users.userImage = urlImage;
     }
     if($cookies.get('username') === 'Merunas Grincalaitis' || $cookies.get('username') === 'Merlox' || $cookies.get('username') === 'Merlox Gr'){
       $users.adminMode = true;
@@ -27,11 +42,6 @@ app.factory('$users', function($http, $state, $location, $cookies){
     }
   })();
 
-  if($users.name){
-    $users.loggedIn = true;
-  }else{
-    $users.loggedIn = false;
-  }
   $users.twitter = function(){
     window.location = '/auth/twitter';
   };
