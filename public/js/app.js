@@ -8,8 +8,10 @@ var app = angular.module('myApp',
   'ngCookies',
 ]);
 
-app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
+app.config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider){
   $locationProvider.html5Mode(true);
+
+  $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 
   $stateProvider
     .state('home', {
@@ -23,6 +25,9 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
         },
         'sidebar': {
           templateUrl: 'views/sidebar.html'
+        },
+        'responses': {
+          templateUrl: 'views/responses.html'
         }
       },
       onEnter: function(){

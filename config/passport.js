@@ -2,7 +2,6 @@ var passport = require('passport'),
 User = require('../app/models/user.server.model.js');
 
 module.exports = function(){
-  //movido de sitio lo de arriba, puede dar errores
   passport.serializeUser(function(user, done){
     done(null, user.id);
   });

@@ -15,6 +15,7 @@ module.exports = function(app, express){
 
   require('../routes/thumbnail.server.routes.js')(app);
   require('../routes/user.server.routes.js')(app);
+  require('../routes/payment.server.routes.js')(app);
 
   app.get('/public/js/directives/*', function(req, res){
     res.sendFile(rootPath+req.path);

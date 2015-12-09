@@ -38,7 +38,11 @@
 
     <div ui-view="mainToolbar"></div>
 
-    <div ui-view="body"></div>
+    <div ui-view="responses"></div>
+
+    <md-button ng-controller="ComprarCtrl as comprarCtrl" ng-click="comprarCtrl.paypalPayment()">
+      Paypal
+    </md-button>
 
     <div layout="row" layout-align="center start" flex>
       <div ui-view flex="{{thumbnailCtrl.expandFlex ? 100 : 75}}"></div>

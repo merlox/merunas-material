@@ -1,17 +1,56 @@
-app.controller('ComprarCtrl', function($interval, $users, $cookies, $timeout){
+app.controller('ComprarCtrl', function($users, $cookies, $timeout, $http){
   var comprarCtrl = this;
   comprarCtrl.$users = $users;
 
-  (function checkCookies(){
+  (function checkLoginForPayment(){
     $timeout(function(){
       if($users.name || $cookies.get('username')){
         comprarCtrl.showLogin = false;
-        comprarCtrl.showEnvio = true;
-        comprarCtrl.showEnvioLogged = true;
+        comprarCtrl.showMetodoPago = true;
+        comprarCtrl.showNombreLogged = true;
       }
     }, 1000);
   })();
 
+  (function checkPaypalCallback(){
+    comprarCtrl.payedName = '';
+    comprarCtrl.payedAddress = '';
+    comprarCtrl.payedEmail = '';
+
+    $http.get('/api/paymentCallback').success(function(response){
+      if(Object.keys(response).length != 0){
+          comprarCtrl.payedName = response.name;
+          comprarCtrl.payedAddress = response.address;
+          comprarCtrl.payedEmail = response.email;
+      }
+    }).catch(function(err){
+      console.log(err)
+    });
+  })();
+
+  comprarCtrl.paypalPayment = function(){
+    comprarCtrl.loading = true;
+    $http.get('/payment/paypal').success(function(response){
+      console.log(response)
+      window.location = response;
+    }).catch(function(err){
+      console.log(err)
+    });
+  };
+  comprarCtrl.creditCardPayment = function(nombre, direccion, numeroDireccion, codigoPostal, ciudad, provincia){
+    $http.get('/payment/creditCard', {
+      nombre: nombre,
+      direccion: direccion,
+      numeroDireccion: numeroDireccion,
+      ciudad: ciudad,
+      provincia: provincia
+    }).success(function(response){
+      console.log(response)
+      window.location = response;
+    }).catch(function(err){
+      console.log(err)
+    });
+  };
   comprarCtrl.twitter = function(){
     window.location = '/auth/twitter';
   };

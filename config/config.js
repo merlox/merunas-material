@@ -17,5 +17,10 @@ config.google = {
   clientSecret: 'X3C2MU2fozu-tLlDvE10DyND',
   callbackURL: 'http://localhost:8080/auth/google/callback'
 };
+config.paypal = {
+  mode: 'sandbox', //sandbox or live
+  client_id: 'Ab22S3wpI612MHAoTo10TKAw8RnsAGHf4rGJOfJ5wChxl2tJq0wD_e84StFPH2sY1unSDNI9z8kcwGOO',
+  client_secret: 'EEciQE0wXdPWIZgtGA-h_fw4mPN_JnEKsdRu7GwpewZtXOINgZO4-NOknK47mpGz6dy6b29bl7tyU6NO'
+};
 
 module.exports = config;
