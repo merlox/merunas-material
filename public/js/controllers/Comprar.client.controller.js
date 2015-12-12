@@ -11,22 +11,24 @@ app.controller('ComprarCtrl', function($users, $cookies, $timeout, $http){
       }
     }, 1000);
   })();
-
   (function checkPaypalCallback(){
-    comprarCtrl.payedName = '';
-    comprarCtrl.payedAddress = '';
-    comprarCtrl.payedEmail = '';
-
-    $http.get('/api/paymentCallback').success(function(response){
-      if(Object.keys(response).length != 0){
+    $timeout(function(){
+      comprarCtrl.payedName = '';
+      comprarCtrl.payedAddress = '';
+      comprarCtrl.payedEmail = '';
+      $http.get('/api/paymentCallback').success(function(response){
+        if(Object.keys(response).length != 0){
           comprarCtrl.payedName = response.name;
+          console.log(comprarCtrl.payedName)
           comprarCtrl.payedAddress = response.address;
           comprarCtrl.payedEmail = response.email;
-      }
-    }).catch(function(err){
-      console.log(err)
-    });
+        }
+      }).catch(function(err){
+        console.log(err)
+      });
+    }, 1000);
   })();
+
 
   comprarCtrl.paypalPayment = function(){
     comprarCtrl.loading = true;

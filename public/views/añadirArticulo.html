@@ -1,0 +1,61 @@
+<!--Creador thumbnails ------------------------------------->
+<md-progress-linear ng-show="thumbnailCtrl.loading" md-mode="indeterminate"></md-progress-linear>
+<md-progress-linear ng-show="thumbnailCtrl.loadingDeterminate" md-mode="determinate" value="{{thumbnailCtrl.loadingDeterminate}}"></md-progress-linear>
+<md-toolbar flex layout-align="center start" class="md-primary">
+  Creador de thumbnails
+</md-toolbar>
+
+<md-content flex layout="row">
+  <md-sidenav md-is-locked-open="true" flex="20" style="height:600px;" class="md-whiteframe-z1">
+    <form ng-submit="thumbnailCtrl.postThumbnail(croppedDataUrl); thumbnailCtrl.loading = true;" layout="column" layout-align="center" enctype="multipart/form-data" method="post">
+        <div ngf-drop ng-model="myFile" ngf-pattern="image/*" layout="column" layout-align="center center" class="dropzone-div">
+          Select or drop image:
+          <img-crop ng-show="myFile" image="myFile | ngfDataUrl" result-image="croppedDataUrl" area-min-size="50" area-type="square" result-image-size="333" ng-init="croppedDataUrl=''">
+          </img-crop>
+          <input type="file" class="md-raised md-primary" accept="image/*" name="image" ngf-select ng-model="myFile" />
+        </div>
+      <md-input-container style="padding:0;">
+        <label>Titulo del artículo</label>
+        <input ng-model="thumbnailCtrl.thumbnailTitle" required minlength="2">
+      </md-input-container>
+      <md-input-container style="padding:0;">
+        <label>Contenido de la thumbnail</label>
+        <textarea ng-model="thumbnailCtrl.thumbnailBody" required rows="5"></textarea>
+      </md-input-container>
+      <md-progress-linear ng-show="thumbnailCtrl.loadingDeterminate" md-mode="determinate" value="{{thumbnailCtrl.loadingDeterminate}}"></md-progress-linear>
+      <md-button type="submit" ng-disabled="thumbnailCtrl.loading" class="md-raised md-primary">
+        Send Thumbnail
+      </md-button>
+    </form>
+  </md-sidenav>
+
+  <md-card class="md-whiteframe-z1" flex="20" style="height:600px;" layout="column">
+    <img ng-show="myFile" ng-src="{{croppedDataUrl}}" alt="" />
+    <img ng-hide="myFile" src="../uploads/preview-image.jpg" alt="" />
+    <md-divider ></md-divider>
+    <md-card-content>
+      <h2>{{thumbnailCtrl.thumbnailTitle}}</h2>
+      <h2 ng-show="!thumbnailCtrl.thumbnailTitle"><i style="color:lightgrey;">Title</i></h2>
+      <p>{{thumbnailCtrl.thumbnailBody}}</p>
+      <p ng-show="!thumbnailCtrl.thumbnailBody"><i style="color:lightgrey">Content</i></p>
+    </md-card-content>
+    <md-divider></md-divider>
+    <md-card-footer layout="row" layout-align="center">
+      <md-button class="md-flat md-accent">Leer artículo</md-button>
+    </md-card-footer>
+  </md-card>
+
+  <!--Add html article converted from markdown-->
+  <md-card flex>
+    <md-input-container style="padding: 0;">
+      <label>Title</label>
+      <input ng-model="thumbnailCtrl.articleTitle" required style="font-size:20px;" type="text" name="name" required>
+    </md-input-container>
+    <md-input-container style="padding:0 0 0 0;">
+      <label>Content</label>
+      <textarea ng-model="thumbnailCtrl.articleBody" required name="name" rows="20" cols="40" required></textarea>
+    </md-input-container>
+  </md-card>
+</md-content>
+
+<h3>{{thumbnailCtrl.response}}</h3>

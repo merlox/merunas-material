@@ -6,6 +6,7 @@ var app = angular.module('myApp',
   'ngImgCrop',
   'ngSanitize',
   'ngCookies',
+  'angularUtils.directives.dirDisqus',
 ]);
 
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider){
@@ -25,9 +26,6 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider, $http
         },
         'sidebar': {
           templateUrl: 'views/sidebar.html'
-        },
-        'responses': {
-          templateUrl: 'views/responses.html'
         }
       },
       onEnter: function(){
@@ -92,7 +90,59 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider, $http
           templateUrl:'views/comprar.html'
         }
       }
+    })
+    .state('contacto', {
+      url: '/contacto',
+      views: {
+        'mainToolbar': {
+          templateUrl: 'views/mainToolbar.html'
+        },
+        '': {
+          templateUrl: 'views/contacto.html'
+        }
+      },
+      onEnter: function(){
+        thumbnailCtrl.isSidebarHidden = true;
+      },
+      onExit: function(){
+        thumbnailCtrl.isSidebarHidden = false;
+      }
+    })
+    .state('emailsAdmin', {
+      url: '/admin/emails',
+      views: {
+        'mainToolbar': {
+          templateUrl: 'views/mainToolbar.html'
+        },
+        '': {
+          templateUrl: 'views/showEmails.html'
+        }
+      },
+      onEnter: function(){
+        thumbnailCtrl.isSidebarHidden = true;
+      },
+      onExit: function(){
+        thumbnailCtrl.isSidebarHidden = false;
+      }
+    })
+    .state('paymentDone', {
+      url: '/paymentDone',
+      views: {
+        'mainToolbar': {
+          templateUrl: 'views/mainToolbar.html'
+        },
+        '': {
+          templateUrl: 'views/paymentDone.html'
+        }
+      },
+      onEnter: function(){
+        thumbnailCtrl.isSidebarHidden = true;
+      },
+      onExit: function(){
+        thumbnailCtrl.isSidebarHidden = false;
+      }
     });
+
 
   $urlRouterProvider.otherwise('/');
 });

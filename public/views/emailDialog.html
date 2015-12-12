@@ -1,0 +1,20 @@
+<md-dialog layout-padding layout-align="center center" ng-controller="EmailCtrl as emailCtrl">
+  <h1>Veamos que funciona para tí</h1>
+  <h4>Razones para unirse a la mayor red de creadores de ideas</h4>
+  <ol>
+    <li><b>Contenido</b> gratis! libros de alta calidad directamente a tu correo!</li>
+    <li><b>Información</b> valiosa en 1/2 emails mes, sin spam</li>
+    <li><b>Seriedad</b>, solo contenido real que vale la pena</li>
+  </ol>
+  <form flex style="width: 100%;" ng-submit="emailCtrl.sendEmail(); emailCtrl.close(true);">
+    <input ng-model="emailCtrl.email" ng-enter="emailCtrl.sendEmail(); emailCtrl.close(true);" style="font-size: 2.5em; border: 2px solid green; text-align:center; padding: 10px;" placeholder="tuemail@email.com" type="text">
+    <div layout="row">
+      <md-button ng-click="emailCtrl.close(false)" class="button-default">
+        Cancelar
+      </md-button>
+      <md-button type="submit" class="md-raised md-accent button-default">
+        Confirmar
+      </md-button>
+    </div>
+  </form>
+</md-dialog>

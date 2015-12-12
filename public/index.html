@@ -27,22 +27,18 @@
     <script src="bower_components/ng-img-crop/compile/minified/ng-img-crop.js" charset="utf-8"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js" charset="utf-8"></script>
     <script src="bower_components/angular-cookies/angular-cookies.min.js" charset="utf-8"></script>
+    <script src="bower_components/angularUtils-disqus/dirDisqus.js" charset="utf-8"></script>
 
     <script src="js/app.js" charset="utf-8"></script>
     <script src="js/services/Users.service.js"></script>
     <script src="js/controllers/Thumbnail.client.controller.js"></script>
+    <script src="js/controllers/Email.client.controller.js"></script>
     <script src="js/controllers/Login.client.controller.js"></script>
     <script src="js/controllers/Comprar.client.controller.js"></script>
   </head>
   <body ng-controller="ThumbnailCtrl as thumbnailCtrl" layout="column" ng-cloak>
 
     <div ui-view="mainToolbar"></div>
-
-    <div ui-view="responses"></div>
-
-    <md-button ng-controller="ComprarCtrl as comprarCtrl" ng-click="comprarCtrl.paypalPayment()">
-      Paypal
-    </md-button>
 
     <div layout="row" layout-align="center start" flex>
       <div ui-view flex="{{thumbnailCtrl.expandFlex ? 100 : 75}}"></div>

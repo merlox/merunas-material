@@ -3,6 +3,7 @@ app.factory('$users', function($http, $state, $location, $cookies){
 
   (function setCookie(){
     $http.get('/api/cookie').success(function(response){
+      console.log(response)
       if (response.username) {
         $cookies.put('username', response.username, {maxAge: 31104000000}); //expires 1 year
         $users.name = $cookies.get('username');
@@ -53,15 +54,16 @@ app.factory('$users', function($http, $state, $location, $cookies){
   };
   $users.signIn = function(myUsername, myPassword){
     $users.loading = true;
-    return $http.post('/signin', {
+    $http.post('/signin', {
       username: myUsername,
       password: myPassword
     }).success(function(response){
       $state.go('home');
-      $users.name = response.username;
+      $users.name = response;
+      console.log(response)
       $users.loading = false;
     }).error(function(error){
-      console.log('Error', response);
+      console.log('Error', error);
     });
   };
   $users.signUp = function(myUsername, myPassword, myEmail){

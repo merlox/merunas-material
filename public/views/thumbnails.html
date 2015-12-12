@@ -1,0 +1,50 @@
+<md-content ng-init="thumbnailCtrl.getThumbnails();" layout="row" layout-wrap layout-align="space-around start">
+  <!--Loading Spinner-->
+  <div flex="100" ng-if="thumbnailCtrl.loading" layout="row" layout-align="center center">
+    <md-progress-circular ng-show="thumbnailCtrl.loading" md-mode="indeterminate"></md-progress-circular>
+    <h3 ng-show="thumbnailCtrl.loading">Loading...</h3>
+  </div>
+  <!--Thumbnails-->
+  <md-card ng-repeat="data in thumbnailCtrl.thumbnailData" flex="30">
+    <img ng-show="data.imageName" ng-src="{{'uploads/'+data.imageName}}" alt="" />
+    <img ng-hide="data.imageName" ng-src="{{'uploads/notfound.png'}}" alt="" />
+    <md-card-content>
+      <h2 ng-show="!editing">{{data.thumbnailTitle}}</h2>
+      <h2 ng-show="editing">
+        <md-input-container>
+          <label>title</label>
+          <input ng-model="editTitle" type="text">
+        </md-input-container>
+      </h2>
+      <p ng-show="!editing">{{data.thumbnailBody}}</p>
+      <p ng-show="editing">
+        <md-input-container>
+          <label>body</label>
+          <textarea ng-model="editBody"></textarea>
+        </md-input-container>
+      </p>
+      <md-progress-linear ng-if="deletingThis"></md-progress-linear>
+      <div ng-if="thumbnailCtrl.adminMode" layout="row" flex>
+        <md-button ng-show="editing" ng-click="editing=false;" class="md-raised md-primary">
+          Cancel</md-button>
+        <md-button ng-hide="editing" ng-click="thumbnailCtrl.removeThumbnail(data.thumbnailTitle); thumbnailCtrl.loading=true; deletingThis=true;" class="md-raised md-warn">
+          Delete</md-button>
+        <md-button ng-hide="editing" ng-click="editing=true;" class="md-raised md-primary">
+          Edit</md-button>
+        <md-button ng-show="editing" ng-click="thumbnailCtrl.editThumbnail(data.thumbnailTitle, editTitle, editBody); editing=false;" class="md-raised md-primary">
+          Save</md-button>
+      </div>
+    </md-card-content>
+    <md-divider></md-divider>
+    <md-card-footer layout="row" layout-align="center">
+      <md-button ng-click="thumbnailCtrl.scrollToTop();" ui-sref="article({id: $index})" class="md-flat md-accent">
+        Más Detalles</md-button>
+    </md-card-footer>
+  </md-card>
+  <!--paginator-->
+  <div ng-show="queryLimit > 19 || thumbnailCtrl.pagesArray > 19" flex="100" layout="row" layout-align="center">
+    <md-button ng-repeat="page in thumbnailCtrl.pagesArray" ng-click="queryLimit ? thumbnailCtrl.getThumbnailsLimit(queryLimit, page) : thumbnailCtrl.getPage(page)" ng-class="{'md-raised' : page == thumbnailCtrl.actualPage}"  class="md-accent">
+      {{page}}
+    </md-button>
+  </div>
+</md-content><!--close thumbnails main area-->

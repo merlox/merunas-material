@@ -1,0 +1,21 @@
+<md-content ng-controller="EmailCtrl as emailCtrl" layout="column" layout-align="center center" layout-padding>
+  <h1>Formulario de contacto</h1>
+  <h3>Valoramos cualquier sugerencia, pregunta o crítica</h3>
+  <form ng-submit="emailCtrl.contactoEmail()" style="width: 80%;">
+    <md-progress-linear ng-show="emailCtrl.loading" md-mode="indeterminate"></md-progress-linear>
+    <md-input-container>
+      <label>De: </label>
+      <input ng-model="emailCtrl.emailContacto" type="text" placeholder="tuemail@aqui.com" required>
+    </md-input-container>
+    <md-input-container>
+      <label>Mensaje: </label>
+      <textarea ng-model="emailCtrl.contenidoEmail" cols="40" rows="10" placeholder="Contenido del mensaje..." required></textarea>
+    </md-input-container>
+    <md-button ng-disabled="emailCtrl.loading" type="submit" class="md-raised md-primary button-primary">
+      Enviar
+    </md-button>
+    <p>
+      {{emailCtrl.response}}
+    </p>
+  </form>
+</md-content>

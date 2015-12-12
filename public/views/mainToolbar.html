@@ -1,0 +1,41 @@
+<md-toolbar ng-controller="LoginCtrl as loginCtrl" id="scrollTop" layout="row" layout-align="space-between center" class="md-primary md-hue-2">
+  <img src="../images/logo.svg" width="200" alt="The top ten web logo" />
+  <div flex></div>
+
+  <md-button ng-click="thumbnailCtrl.editArticle(thumbnailCtrl.articleFound.articleTitle, thumbnailCtrl.articleFound.articleBody);" ng-show="thumbnailCtrl.adminMode" ng-disabled="thumbnailCtrl.loading" class="md-raised md-primary">
+    Guardar cambios
+  </md-button>
+  <md-button ng-if="loginCtrl.$users.adminMode" ui-sref="emailsAdmin" class="md-raised md-primary">
+    Emails Admin
+  </md-button>
+  <md-button ng-click="thumbnailCtrl.scrollToTop();" ui-sref="home" class="md-raised md-primary">
+    Inicio
+  </md-button>
+  <md-button ng-if="loginCtrl.$users.adminMode" ui-sref="admin" class="md-raised md-primary" ui-sref="form">
+    Añadir articulo</md-button>
+  <md-button ng-click="thumbnailCtrl.isSidebarHidden=true" ng-show="!thumbnailCtrl.isSidebarHidden" class="md-raised md-primary">
+    Ocultar sidebar</md-button>
+  <md-button ng-click="thumbnailCtrl.isSidebarHidden=false" ng-show="thumbnailCtrl.isSidebarHidden" class="md-raised md-primary">
+    Mostrar sidebar</md-button>
+  <md-button ng-click="thumbnailCtrl.adminMode = true" ng-show="loginCtrl.$users.adminMode && !thumbnailCtrl.adminMode" class="md-raised md-primary">
+    Modo admin Off
+  </md-button>
+  <md-button ng-click="thumbnailCtrl.adminMode = false" ng-show="loginCtrl.$users.adminMode && thumbnailCtrl.adminMode" class="md-raised md-primary">
+    Modo admin On
+  </md-button>
+  <md-button ui-sref="contacto" class="md-raised md-primary">
+    Contacto
+  </md-button>
+  <div layout="row" layout-align="center center">
+    <md-button ng-show="!loginCtrl.$users.loggedIn" ui-sref="signin" class="md-raised md-primary">
+      Hola, identifícate</md-button>
+    <md-button ng-show="loginCtrl.$users.loggedIn" ng-click="loginCtrl.$users.signOut()" ng-disabled="loginCtrl.$users.loading" class="md-raised md-primary">
+      Cerrar sesión</md-button>
+    <md-button ng-show="loginCtrl.$users.loggedIn" class="md-primary">
+      <span style="float:left; margin-top:6px;">
+        {{loginCtrl.$users.name}}</span>
+      <img ng-src="{{loginCtrl.$users.userImage}}" style="margin-left:5px; float:right;" alt=""/>
+    </md-button>
+  </div>
+</md-toolbar>
+<md-progress-linear ng-show="loginCtrl.$users.loading" md-mode="indeterminate"></md-progress-linear>

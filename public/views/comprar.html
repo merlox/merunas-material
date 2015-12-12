@@ -1,0 +1,175 @@
+<md-content ng-controller="ComprarCtrl as comprarCtrl">
+  <md-card layout-align="center center" flex>
+    <h1>1. Autentificación</h1>
+    <md-divider></md-divider>
+    <md-card-container ng-show="!comprarCtrl.showNombreLogged" layout="row" flex>
+      <md-button ng-click="comprarCtrl.showLogin = !comprarCtrl.showLogin" ng-disabled="comprarCtrl.showEnvio" flex="50" class="md-raised md-primary button-default">
+        <span ng-show="!comprarCtrl.showLogin">Entrar o registrarse</span>
+        <span ng-show="comprarCtrl.showLogin">Cancelar</span>
+      </md-button>
+      <md-button ng-click="comprarCtrl.showMetodoPago = !comprarCtrl.showMetodoPago" ng-disabled="comprarCtrl.showLogin" flex="50" class="md-raised md-primary button-default">
+        <span ng-show="!comprarCtrl.showMetodoPago">Continuar como anonimo</span>
+        <span ng-show="comprarCtrl.showMetodoPago">Cancelar</span>
+      </md-button>
+    </md-card-container>
+    <md-button ng-show="comprarCtrl.showNombreLogged" ng-disabled="true" class="md-raised md-primary button-default">
+      Sesion iniciada como: {{comprarCtrl.$users.name}}
+    </md-button>
+  </md-card>
+
+  <md-card ng-controller="LoginCtrl as loginCtrl" layout-padding ng-show="comprarCtrl.showLogin" ng-init="thumbnailCtrl.isSidebarHidden = true" flex layout-align="center center">
+    <!--Loading spinner-->
+      <div ng-if="loginCtrl.$users.loading" layout="row" layout-align="center center" flex>
+        <md-progress-circular ng-show="loginCtrl.$users.loading" md-mode="indeterminate"></md-progress-circular>
+        <h3 ng-show="loginCtrl.$users.loading">Loading...</h3>
+      </div>
+    <!--Content-->
+      <h1>2. Entrar o Registrarse</h1>
+      <md-content style="width:70%" layout="column" layout-align="center">
+        <md-button ng-click="comprarCtrl.twitter()" class="md-raised md-accent">Use Twitter</md-button>
+        <md-button ng-click="loginCtrl.$users.facebook()" class="md-raised md-accent md-hue-3">Use Facebook</md-button>
+        <md-button ng-click="loginCtrl.$users.google()" class="md-raised md-warn">Use google</md-button>
+      </md-content>
+
+      <md-content style="width:50%;" layout="row" layout-align="center center">
+        <md-button ng-click="showLogin = !showLogin" flex="45" class="md-raised md-primary button-default">
+          Login
+        </md-button>
+        <md-button ng-click="showRegister = !showRegister" flex="45" class="md-raised md-primary button-default">
+          Register
+        </md-button>
+      </md-content>
+
+      <md-content ng-show="showLogin">
+        <md-input-container>
+          <label>Username</label>
+          <input ng-model="loginCtrl.username" type="text">
+        </md-input-container>
+        <md-input-container>
+          <label>Password</label>
+          <input ng-model="loginCtrl.password" type="text">
+        </md-input-container>
+        <md-button ng-click="loginCtrl.$users.signIn(loginCtrl.username, loginCtrl.password)" ng-disabled="loginCtrl.$users.loading" class="md-raised md-primary button-default">
+          Sign In
+        </md-button>
+      </md-content>
+
+      <md-content ng-show="showRegister">
+        <md-input-container>
+          <label>Username</label>
+          <input ng-model="loginCtrl.username" type="text">
+        </md-input-container>
+        <md-input-container>
+          <label>Password</label>
+          <input ng-model="loginCtrl.password" type="text">
+        </md-input-container>
+        <md-input-container>
+          <label>Email</label>
+          <input ng-model="loginCtrl.email" type="text">
+        </md-input-container>
+        <md-button ng-click="loginCtrl.$users.signUp(loginCtrl.username, loginCtrl.password, loginCtrl.email)" ng-disabled="loginCtrl.$users.loading" class="md-raised md-primary button-default">
+          Register
+        </md-button>
+      </md-content>
+  </md-card>
+
+  <md-card ng-show="comprarCtrl.showMetodoPago" layout-padding flex layout-align="start center">
+    <h1>2. Forma de pago deseada</h1>
+
+    <md-button ng-click="comprarCtrl.paypalShow = !comprarCtrl.paypalShow; comprarCtrl.showEnvio = false;" ng-disabled="comprarCtrl.showEnvio" class="md-raised button-default">
+      <span ng-show="!comprarCtrl.paypalShow">Paypal</span><span ng-show="comprarCtrl.paypalShow">Cancelar</span>
+    </md-button>
+    <md-button ng-click="comprarCtrl.showEnvio = !comprarCtrl.showEnvio; comprarCtrl.paypalShow = false;" ng-disabled="comprarCtrl.paypalShow" class="md-raised button-default">
+      <span ng-show="!comprarCtrl.showEnvio">Tarjeta</span><span ng-show="comprarCtrl.showEnvio">Cancelar</span>
+    </md-button>
+  </md-card>
+
+  <md-card ng-show="comprarCtrl.paypalShow" style="padding: 70px" flex layout-align="start center">
+    <b ng-show="comprarCtrl.paypalShow">
+      *Se usarán los datos de envio establecidos en el pago paypal, se enviará email con el recibo a la dirección establecida en el pago paypal.
+    </b>
+    <br>
+    <br>
+    <md-button ng-click="comprarCtrl.paypalPayment()" ng-disabled="comprarCtrl.loading" ng-show="comprarCtrl.paypalShow" class="md-raised md-primary button-default">
+      <md-progress-linear md-mode="indeterminate" ng-show="comprarCtrl.loading"></md-progress-linear>
+      Proceder a pagar con paypal*
+    </md-button>
+  </md-card>
+
+  <md-card ng-show="comprarCtrl.showEnvio" layout-padding layout-align="center center" flex>
+    <h1>3. Detalles de envio</h1>
+    <form ng-submit="comprarCtrl.showEmail = true" style="width: 70%; font-size:1.3em;">
+      <md-input-container>
+        <label>Nombre</label>
+        <input ng-model="comprarCtrl.nombreComprador" type="text" placeholder="Ejemplo: Paco Lopez" required>
+      </md-input-container>
+      <md-input-container>
+        <label>Direccion</label>
+        <input ng-model="comprarCtrl.direccionComprador" type="text" placeholder="Ejemplo: Calle Ejemplo, Portal 2, 4ºA" required>
+      </md-input-container>
+      <md-container layout="row">
+        <md-input-container flex="50">
+          <label>Numero</label>
+          <input ng-model="comprarCtrl.numeroDireccionComprador" type="number" placeholder="Ejemplo: 45" required>
+        </md-input-container>
+        <md-input-container flex="50">
+          <label>Codigo Postal</label>
+          <input ng-model="comprarCtrl.codigoPostalComprador" type="text" form="" placeholder="Ejemplo: 02332" required>
+        </md-input-container>
+      </md-container>
+      <md-input-container>
+        <label>Ciudad</label>
+        <input ng-model="comprarCtrl.ciudadComprador" type="text" placeholder="Ejemplo: Alcobendas" required>
+      </md-input-container>
+      <md-input-container>
+        <label>Provincia</label>
+        <input ng-model="comprarCtrl.provinciaComprador" type="text" placeholder="Ejemplo: Sevilla" required>
+      </md-input-container>
+      <md-button style="display:block; margin:auto; margin-bottom:7px;" type="submit" class="md-raised md-primary button-default">
+        <label for="submit-form">Continuar</label>
+      </md-button>
+    </form>
+  </md-card>
+
+  <md-card ng-show="comprarCtrl.showEnvio && comprarCtrl.showEmail" layout-padding flex layout-align="start center">
+    <h1>4. Email</h1>
+    Se usará este email para enviar el recibo de pago.
+    <form ng-submit="comprarCtrl.showConfirmar = true" layout-align="start center" style="width: 70%;">
+      <md-input-container style="font-size:1.3em;">
+        <label>Email</label>
+        <input ng-model="comprarCtrl.emailComprador" type="email" placeholder="Ejemplo: ejemplo@ejemplo.com" required>
+      </md-input-container>
+      <md-button type="submit" class="md-raised md-primary button-default button-align">
+        Continuar para confirmar
+      </md-button>
+    </form>
+  </md-card>
+
+  <md-card ng-show="comprarCtrl.showEnvio && comprarCtrl.showEmail && comprarCtrl.showConfirmar" layout-padding flex layout-align="start center">
+    <h1>5. Resumen</h1>
+    <p>
+      Revisa que sea correcta la dirección de envío. Puedes cambiar la información en cualquier momento en el formulario anterior.
+    </p>
+    <div>
+      <md-list style="width:100%; font-size: 1.3em;">
+        Nombre: <b>{{comprarCtrl.nombreComprador}}</b>
+        <md-divider></md-divider>
+        Dirección: <b>{{comprarCtrl.direccionComprador}}</b>
+        <md-divider></md-divider>
+        Número dirección: <b>{{comprarCtrl.numeroDireccionComprador}}</b>
+        <md-divider></md-divider>
+        Código postal: <b>{{comprarCtrl.codigoPostalComprador}}</b>
+        <md-divider></md-divider>
+        Ciudad: <b>{{comprarCtrl.ciudadComprador}}</b>
+        <md-divider></md-divider>
+        Provincia: <b>{{comprarCtrl.provinciaComprador}}</b>
+      </md-list>
+    </div>
+
+    <md-button ng-click="comprarCtrl.creditCardPayment(comprarCtrl.nombreComprador, comprarCtrl.direccionComprador, comprarCtrl.numeroDireccionComprador, comprarCtrl.codigoPostalComprador, comprarCtrl.ciudadComprador, comprarCtrl.provinciaComprador)" class="md-raised md-primary button-default">
+      Proceder a pagar con tarjeta
+    </md-button>
+  </md-card>
+
+
+</md-content>

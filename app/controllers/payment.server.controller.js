@@ -84,7 +84,7 @@ exports.paypalCallback = function(req, res){
       console.log(err);
       throw err;
     }else{
-      return res.redirect('/');
+      return res.redirect('/paymentDone');
     }
   });
 };

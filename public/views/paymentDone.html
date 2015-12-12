@@ -1,0 +1,25 @@
+<md-card ng-controller="ComprarCtrl as comprarCtrl" layout="column" layout-align="center center" style="padding: 15px;">
+  <h1>Gracias</h1>
+  <p>
+    Pago de 40€ completado correctamente a nombre de <b>{{comprarCtrl.payedName}}</b>
+  </p>
+  <p>
+    Se ha enviado el recibo al correo: <b>{{comprarCtrl.payedEmail}}</b>
+  </p>
+
+  <h3>Datos de envío</h3>
+  <p>Dirección: <b>{{comprarCtrl.payedAddress.line1}}</b></p>
+  <md-divider></md-divider>
+  <p>Ciudad: <b>{{comprarCtrl.payedAddress.city}}</b></p>
+  <md-divider></md-divider>
+  <p>Provincia: <b>{{comprarCtrl.payedAddress.state}}</b></p>
+  <md-divider></md-divider>
+  <p>Codigo postal: <b>{{comprarCtrl.payedAddress.postal_code}}</b></p>
+  <md-divider></md-divider>
+  <p>Pais: <b>{{comprarCtrl.payedAddress.country_code}}</b></p>
+  <md-divider></md-divider>
+
+  <md-button ui-sref="home" class="md-raised md-primary button-default">
+    Volver a inicio
+  </md-button>
+</md-card>

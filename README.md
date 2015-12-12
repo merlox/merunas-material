@@ -99,3 +99,22 @@ Cuando un callback se ejecuta _sometime in the future_ osea que es asincrono, es
 **Por ello ejecutará los callbacks uno por uno tras el código síncrono principal**
 
 Los callback se crean `síncronomicamente` pero ejecutados `asíncronicamente`.
+
+## Directiva ng-enter para ejecutar una funcion como si fuera ng-click al pulsar enter
+
+```javascript
+  'use strict';
+
+  app.directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+      element.bind('keydown keypress', function (event) {
+        if(event.which === 13) {
+          scope.$apply(function (){
+              scope.$eval(attrs.ngEnter || attrs.ngClick, {$event:event});
+            });
+          event.preventDefault();
+        }
+      });
+    };
+  });
+```

@@ -1,0 +1,11 @@
+<md-card ng-controller="EmailCtrl as emailCtrl" layout="column" layout-align="center center">
+  <md-button ng-click="emailCtrl.getEmails()" class="md-raised md-primary button-default">
+    Get Emails
+  </md-button>
+  <md-list>
+    <md-list-item ng-repeat="data in emailCtrl.getEmails">
+      {{data.email}} - {{data.createdAt | date}}
+    </md-list-item>
+    <md-divider></md-divider>
+  </md-list>
+</md-card>

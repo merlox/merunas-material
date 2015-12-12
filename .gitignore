@@ -9,5 +9,4 @@ target/
 *.txt
 tutorials/
 config/
-public/views
-public/index.html
+app/
